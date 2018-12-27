@@ -23,6 +23,7 @@ import org.teiid.webui.share.services.ITeiidService;
 import com.datadrizzle.connection.translators.ConnectionTranslator;
 import com.datadrizzle.entities.Chart;
 import com.datadrizzle.entities.DataDrizzleConnection;
+import com.datadrizzle.share.ApplicationConstants;
 import com.datadrizzle.share.Either;
 import com.datadrizzle.share.Notification;
 import com.datadrizzle.share.dao.IConnectionDAO;
@@ -63,10 +64,10 @@ public class DataDrizzleService implements IDataDrizzleService {
 
 		return right(barChart);
 
-//	 	return teiidService.testConnection(teiidConnection);
+		// return teiidService.testConnection(teiidConnection);
 	}
 
-	public Either<Notification, List<Chart<String, Integer>>> getStockAndIndexPriceAsChart(List<String> companyNames) {
+	public Either<Notification, List<Chart<String, Integer>>> getStockAndIndexPrice(List<String> companyNames) {
 
 		List<Chart<String, Integer>> barChart = new ArrayList<>();
 
@@ -87,7 +88,8 @@ public class DataDrizzleService implements IDataDrizzleService {
 		// retrieve stock and index price data from world trading data API.
 
 		try {
-			JSONObject stockJSON = new JSONObject(sendGet());
+			JSONObject stockJSON = new JSONObject(sendGet(getStockAndRealTimeIndexUrl(companyNames)));
+			System.out.println("stockJSON "+stockJSON);
 
 			JSONArray dataArray = stockJSON.getJSONArray("data");
 
@@ -114,9 +116,7 @@ public class DataDrizzleService implements IDataDrizzleService {
 	}
 
 	// HTTP GET request
-	private String sendGet() throws IOException {
-
-		String urlStr = "http://www.google.com/search?q=mkyong";
+	private String sendGet(String urlStr) throws IOException {
 
 		URL obj = new URL(urlStr);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -145,4 +145,17 @@ public class DataDrizzleService implements IDataDrizzleService {
 
 	}
 
+	private String getStockAndRealTimeIndexUrl(List<String> companyNames) {
+		StringBuilder urlBuilder = new StringBuilder(ApplicationConstants.stockAndRealTimeIndexAPI);
+		urlBuilder.append("?");
+		urlBuilder.append("symbol");
+
+		urlBuilder.append(String.join(",", companyNames));
+		
+		urlBuilder.append("&");
+		urlBuilder.append("api_token=");
+		urlBuilder.append(ApplicationConstants.worldTradingDataAPIToken);
+
+		return urlBuilder.toString();
+	}
 }
