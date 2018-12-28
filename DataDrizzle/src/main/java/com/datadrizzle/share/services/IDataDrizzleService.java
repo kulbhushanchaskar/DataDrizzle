@@ -9,5 +9,5 @@ import com.datadrizzle.share.Notification;
 
 public interface IDataDrizzleService {
 	public Either<Notification, List<Chart<String,Integer>>> testConnection(DataDrizzleConnection connection);
-	public Either<Notification, List<Chart<String, Integer>>> getStockAndIndexPrice(List<String> companyNames);
+	public Either<Notification, List<Chart<String, Double>>> getStockAndIndexPrice(List<String> companyNames);
 }

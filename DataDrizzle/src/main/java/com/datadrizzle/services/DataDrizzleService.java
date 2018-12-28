@@ -1,12 +1,12 @@
 package com.datadrizzle.services;
 
 import static com.datadrizzle.share.Either.right;
+import static com.datadrizzle.share.Either.left;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,11 +23,14 @@ import org.teiid.webui.share.services.ITeiidService;
 import com.datadrizzle.connection.translators.ConnectionTranslator;
 import com.datadrizzle.entities.Chart;
 import com.datadrizzle.entities.DataDrizzleConnection;
+import com.datadrizzle.entities.StockAndIndexRealTime;
 import com.datadrizzle.share.ApplicationConstants;
 import com.datadrizzle.share.Either;
 import com.datadrizzle.share.Notification;
 import com.datadrizzle.share.dao.IConnectionDAO;
 import com.datadrizzle.share.services.IDataDrizzleService;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 @Service
 public class DataDrizzleService implements IDataDrizzleService {
@@ -67,49 +70,27 @@ public class DataDrizzleService implements IDataDrizzleService {
 		// return teiidService.testConnection(teiidConnection);
 	}
 
-	public Either<Notification, List<Chart<String, Integer>>> getStockAndIndexPrice(List<String> companyNames) {
+	public Either<Notification, List<Chart<String, Double>>> getStockAndIndexPrice(List<String> companyNames) {
 
-		List<Chart<String, Integer>> barChart = new ArrayList<>();
-
-		String type = "bar";
-		String name = "SF Zoo";
-		List<String> chart1XValues = new ArrayList<>(Arrays.asList("giraffes", "orangutans", "monkeys", "lion"));
-		List<Integer> chart1YValues = new ArrayList<>(Arrays.asList(20, 14, 30, 10));
-		Chart<String, Integer> chart1 = new Chart<>(type, name, chart1XValues, chart1YValues);
-
-		name = "LA Zoo";
-		List<String> chart2XValues = new ArrayList<>(Arrays.asList("giraffes", "orangutans", "monkeys", "lion"));
-		List<Integer> chart2YValues = new ArrayList<>(Arrays.asList(12, 18, 23, 5));
-		Chart<String, Integer> chart2 = new Chart<>(type, name, chart2XValues, chart2YValues);
-
-		barChart.add(chart1);
-		barChart.add(chart2);
+		List<Chart<String, Double>> barChart = new ArrayList<>();
 
 		// retrieve stock and index price data from world trading data API.
 
 		try {
 			JSONObject stockJSON = new JSONObject(sendGet(getStockAndRealTimeIndexUrl(companyNames)));
-			System.out.println("stockJSON "+stockJSON);
-
 			JSONArray dataArray = stockJSON.getJSONArray("data");
-
-			for (int arrayIndex = 0; arrayIndex < dataArray.length(); arrayIndex++) {
-				JSONObject companyInfo = (JSONObject) dataArray.get(arrayIndex);
-				companyInfo.remove("symbol");
-				companyInfo.remove("currency");
-				companyInfo.remove("stock_exchange_long");
-				companyInfo.remove("stock_exchange_short");
-				companyInfo.remove("timezone");
-				companyInfo.remove("timezone_name");
-				companyInfo.remove("gmt_offset");
-				companyInfo.remove("last_trade_time");
-				System.out.println(companyInfo);
-			}
-			System.out.println("response");
-
+			
+			Gson gson = new Gson();
+			String data = dataArray.toString().replace("52_week_high", "fifty_two_week_high").replace("52_week_low", "fifty_two_week_low");
+			List<StockAndIndexRealTime> stockList = gson.fromJson(data, new TypeToken<List<StockAndIndexRealTime>>(){}.getType());
+			
+			System.out.println(stockList);
+			
+			stockList.stream().forEach(stock -> DataDrizzleService.createChart(barChart, stock));
 		} catch (JSONException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Notification notification = new Notification();
+			notification.addMessage("Technical difficulties occured during processing the data");
+			return left(notification);
 		}
 
 		return right(barChart);
@@ -149,6 +130,7 @@ public class DataDrizzleService implements IDataDrizzleService {
 		StringBuilder urlBuilder = new StringBuilder(ApplicationConstants.stockAndRealTimeIndexAPI);
 		urlBuilder.append("?");
 		urlBuilder.append("symbol");
+		urlBuilder.append("=");
 
 		urlBuilder.append(String.join(",", companyNames));
 		
@@ -157,5 +139,28 @@ public class DataDrizzleService implements IDataDrizzleService {
 		urlBuilder.append(ApplicationConstants.worldTradingDataAPIToken);
 
 		return urlBuilder.toString();
+	}
+	
+	private static void createChart(List<Chart<String, Double>> barChart, StockAndIndexRealTime stock) {
+		
+		List<Double> yAxisValues = new ArrayList<>();
+		yAxisValues.add(stock.getPrice());
+		yAxisValues.add(stock.getPrice_open());
+		yAxisValues.add(stock.getDay_high());
+		yAxisValues.add(stock.getDay_low());
+		yAxisValues.add(stock.getFifty_two_week_high());
+		yAxisValues.add(stock.getFifty_two_week_low());
+		yAxisValues.add(stock.getDay_change());
+		yAxisValues.add(stock.getChange_pct());
+		yAxisValues.add(stock.getClose_yesterday());
+//		yAxisValues.add(stock.getMarket_cap());
+//		yAxisValues.add(stock.getVolume());
+//		yAxisValues.add(stock.getShares());
+		
+		Chart<String, Double> chart = new Chart<>("bar", stock.getName(), 
+				ApplicationConstants.stockIndexText, yAxisValues);
+		
+		barChart.add(chart);
+		
 	}
 }

@@ -27,10 +27,10 @@ public class StockAndIndexRealTime {
     "gmt_offset": "-18000",
     "last_trade_time": "2018-12-21 16:00:01"*/
 	
-	String symbol;
+//	String symbol;
 	String name;
 	double price;
-	Currency currency;
+//	String currency;
 	double price_open;
 	double day_high;
 	double day_low;
@@ -42,169 +42,127 @@ public class StockAndIndexRealTime {
 	double market_cap;
 	double volume;
 	double shares;
-	double stock_exchange_long;
-	double stock_exchange_short;
-	TimeZone timezone;
-	String timezone_name;
-	String gmt_offset;
-	double last_trade_time;
-	public String getSymbol() {
-		return symbol;
+//	String stock_exchange_long;
+//	String stock_exchange_short;
+//	String timezone;
+//	String timezone_name;
+//	String gmt_offset;
+//	String last_trade_time;
+	
+	public StockAndIndexRealTime() {
+		super();
 	}
-	public StockAndIndexRealTime setSymbol(String symbol) {
-		this.symbol = symbol;
-		return this;
-	}
+
 	public String getName() {
 		return name;
 	}
-	public StockAndIndexRealTime setName(String name) {
+
+	public void setName(String name) {
 		this.name = name;
-		return this;
 	}
+
 	public double getPrice() {
 		return price;
 	}
-	public StockAndIndexRealTime setPrice(double price) {
+
+	public void setPrice(double price) {
 		this.price = price;
-		return this;
 	}
-	public Currency getCurrency() {
-		return currency;
-	}
-	public StockAndIndexRealTime setCurrency(Currency currency) {
-		this.currency = currency;
-		return this;
-	}
+
 	public double getPrice_open() {
 		return price_open;
 	}
-	public StockAndIndexRealTime setPrice_open(double price_open) {
+
+	public void setPrice_open(double price_open) {
 		this.price_open = price_open;
-		return this;
 	}
+
 	public double getDay_high() {
 		return day_high;
 	}
-	public StockAndIndexRealTime setDay_high(double day_high) {
+
+	public void setDay_high(double day_high) {
 		this.day_high = day_high;
-		return this;
 	}
+
 	public double getDay_low() {
 		return day_low;
 	}
-	public StockAndIndexRealTime setDay_low(double day_low) {
+
+	public void setDay_low(double day_low) {
 		this.day_low = day_low;
-		return this;
 	}
+
 	public double getFifty_two_week_high() {
 		return fifty_two_week_high;
 	}
-	public StockAndIndexRealTime setFifty_two_week_high(double fifty_two_week_high) {
+
+	public void setFifty_two_week_high(double fifty_two_week_high) {
 		this.fifty_two_week_high = fifty_two_week_high;
-		return this;
 	}
+
 	public double getFifty_two_week_low() {
 		return fifty_two_week_low;
 	}
-	public StockAndIndexRealTime setFifty_two_week_low(double fifty_two_week_low) {
+
+	public void setFifty_two_week_low(double fifty_two_week_low) {
 		this.fifty_two_week_low = fifty_two_week_low;
-		return this;
 	}
+
 	public double getDay_change() {
 		return day_change;
 	}
-	public StockAndIndexRealTime setDay_change(double day_change) {
+
+	public void setDay_change(double day_change) {
 		this.day_change = day_change;
-		return this;
 	}
+
 	public double getChange_pct() {
 		return change_pct;
 	}
-	public StockAndIndexRealTime setChange_pct(double change_pct) {
+
+	public void setChange_pct(double change_pct) {
 		this.change_pct = change_pct;
-		return this;
 	}
+
 	public double getClose_yesterday() {
 		return close_yesterday;
 	}
-	public StockAndIndexRealTime setClose_yesterday(double close_yesterday) {
+
+	public void setClose_yesterday(double close_yesterday) {
 		this.close_yesterday = close_yesterday;
-		return this;
 	}
+
 	public double getMarket_cap() {
 		return market_cap;
 	}
-	public StockAndIndexRealTime setMarket_cap(double market_cap) {
+
+	public void setMarket_cap(double market_cap) {
 		this.market_cap = market_cap;
-		return this;
 	}
+
 	public double getVolume() {
 		return volume;
 	}
-	public StockAndIndexRealTime setVolume(double volume) {
+
+	public void setVolume(double volume) {
 		this.volume = volume;
-		return this;
 	}
+
 	public double getShares() {
 		return shares;
 	}
-	public StockAndIndexRealTime setShares(double shares) {
+
+	public void setShares(double shares) {
 		this.shares = shares;
-		return this;
 	}
-	public double getStock_exchange_long() {
-		return stock_exchange_long;
-	}
-	public StockAndIndexRealTime setStock_exchange_long(double stock_exchange_long) {
-		this.stock_exchange_long = stock_exchange_long;
-		return this;
-	}
-	public double getStock_exchange_short() {
-		return stock_exchange_short;
-	}
-	public StockAndIndexRealTime setStock_exchange_short(double stock_exchange_short) {
-		this.stock_exchange_short = stock_exchange_short;
-		return this;
-	}
-	public TimeZone getTimezone() {
-		return timezone;
-	}
-	public StockAndIndexRealTime setTimezone(TimeZone timezone) {
-		this.timezone = timezone;
-		return this;
-	}
-	public String getTimezone_name() {
-		return timezone_name;
-	}
-	public StockAndIndexRealTime setTimezone_name(String timezone_name) {
-		this.timezone_name = timezone_name;
-		return this;
-	}
-	public String getGmt_offset() {
-		return gmt_offset;
-	}
-	public StockAndIndexRealTime setGmt_offset(String gmt_offset) {
-		this.gmt_offset = gmt_offset;
-		return this;
-	}
-	public double getLast_trade_time() {
-		return last_trade_time;
-	}
-	public StockAndIndexRealTime setLast_trade_time(double last_trade_time) {
-		this.last_trade_time = last_trade_time;
-		return this;
-	}
-	
+
 	@Override
 	public String toString() {
-		return "StockAndIndexRealTime [symbol=" + symbol + ", name=" + name + ", price=" + price + ", currency="
-				+ currency + ", price_open=" + price_open + ", day_high=" + day_high + ", day_low=" + day_low
-				+ ", fifty_two_week_high=" + fifty_two_week_high + ", fifty_two_week_low=" + fifty_two_week_low
-				+ ", day_change=" + day_change + ", change_pct=" + change_pct + ", close_yesterday=" + close_yesterday
-				+ ", market_cap=" + market_cap + ", volume=" + volume + ", shares=" + shares + ", stock_exchange_long="
-				+ stock_exchange_long + ", stock_exchange_short=" + stock_exchange_short + ", timezone=" + timezone
-				+ ", timezone_name=" + timezone_name + ", gmt_offset=" + gmt_offset + ", last_trade_time="
-				+ last_trade_time + "]";
+		return "StockAndIndexRealTime [name=" + name + ", price=" + price + ", price_open=" + price_open + ", day_high="
+				+ day_high + ", day_low=" + day_low + ", fifty_two_week_high=" + fifty_two_week_high
+				+ ", fifty_two_week_low=" + fifty_two_week_low + ", day_change=" + day_change + ", change_pct="
+				+ change_pct + ", close_yesterday=" + close_yesterday + ", market_cap=" + market_cap + ", volume="
+				+ volume + ", shares=" + shares + "]";
 	}
 }

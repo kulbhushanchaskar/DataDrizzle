@@ -6,6 +6,9 @@ import java.util.List;
 public class Notification {
 	
 	List<String> notificationMessages;
+	//List<String> successMsgs
+	//List<String> errorMsgs
+	//List<String> warningMsgs
 	
 	public Notification() {
 		notificationMessages = new ArrayList<String>();
