@@ -23,6 +23,7 @@ import org.teiid.webui.share.services.ITeiidService;
 import com.datadrizzle.connection.translators.ConnectionTranslator;
 import com.datadrizzle.entities.Chart;
 import com.datadrizzle.entities.DataDrizzleConnection;
+import com.datadrizzle.entities.MutualFundIndex;
 import com.datadrizzle.entities.StockAndIndexRealTime;
 import com.datadrizzle.share.ApplicationConstants;
 import com.datadrizzle.share.Either;
@@ -75,17 +76,19 @@ public class DataDrizzleService implements IDataDrizzleService {
 		List<Chart<String, Double>> barChart = new ArrayList<>();
 
 		// retrieve stock and index price data from world trading data API.
-
 		try {
-			JSONObject stockJSON = new JSONObject(sendGet(getStockAndRealTimeIndexUrl(companyNames)));
+			JSONObject stockJSON = new JSONObject(
+					sendGet(buildURL(companyNames, ApplicationConstants.stockAndRealTimeIndexAPI)));
 			JSONArray dataArray = stockJSON.getJSONArray("data");
-			
+
 			Gson gson = new Gson();
-			String data = dataArray.toString().replace("52_week_high", "fifty_two_week_high").replace("52_week_low", "fifty_two_week_low");
-			List<StockAndIndexRealTime> stockList = gson.fromJson(data, new TypeToken<List<StockAndIndexRealTime>>(){}.getType());
-			
+			String data = dataArray.toString().replace("52_week_high", "fifty_two_week_high").replace("52_week_low",
+					"fifty_two_week_low");
+			List<StockAndIndexRealTime> stockList = gson.fromJson(data, new TypeToken<List<StockAndIndexRealTime>>() {
+			}.getType());
+
 			System.out.println(stockList);
-			
+
 			stockList.stream().forEach(stock -> DataDrizzleService.createChart(barChart, stock));
 		} catch (JSONException | IOException e) {
 			Notification notification = new Notification();
@@ -126,23 +129,23 @@ public class DataDrizzleService implements IDataDrizzleService {
 
 	}
 
-	private String getStockAndRealTimeIndexUrl(List<String> companyNames) {
-		StringBuilder urlBuilder = new StringBuilder(ApplicationConstants.stockAndRealTimeIndexAPI);
+	private String buildURL(List<String> companyNames, String baseURL) {
+		StringBuilder urlBuilder = new StringBuilder(baseURL);
 		urlBuilder.append("?");
 		urlBuilder.append("symbol");
 		urlBuilder.append("=");
 
 		urlBuilder.append(String.join(",", companyNames));
-		
+
 		urlBuilder.append("&");
 		urlBuilder.append("api_token=");
 		urlBuilder.append(ApplicationConstants.worldTradingDataAPIToken);
 
 		return urlBuilder.toString();
 	}
-	
+
 	private static void createChart(List<Chart<String, Double>> barChart, StockAndIndexRealTime stock) {
-		
+
 		List<Double> yAxisValues = new ArrayList<>();
 		yAxisValues.add(stock.getPrice());
 		yAxisValues.add(stock.getPrice_open());
@@ -156,11 +159,63 @@ public class DataDrizzleService implements IDataDrizzleService {
 //		yAxisValues.add(stock.getMarket_cap());
 //		yAxisValues.add(stock.getVolume());
 //		yAxisValues.add(stock.getShares());
-		
-		Chart<String, Double> chart = new Chart<>("bar", stock.getName(), 
-				ApplicationConstants.stockIndexText, yAxisValues);
-		
+
+		Chart<String, Double> chart = new Chart<>("bar", stock.getName(), ApplicationConstants.stockIndexText,
+				yAxisValues);
+
 		barChart.add(chart);
-		
+
+	}
+
+	public Either<Notification, List<Chart<String, Double>>> getMutualFundIndexes(List<String> companyNames) {
+
+		List<Chart<String, Double>> barChart = new ArrayList<>();
+
+		// retrieve stock and index price data from world trading data API.
+
+		try {
+			JSONObject stockJSON = new JSONObject(
+					sendGet(buildURL(companyNames, ApplicationConstants.mutualFundRealTimeIndexAPI)));
+			JSONArray dataArray = stockJSON.getJSONArray("data");
+
+			Gson gson = new Gson();
+			String data = dataArray.toString()/*.replace("52_week_high", "fifty_two_week_high").replace("52_week_low",
+					"fifty_two_week_low")*/;
+			List<MutualFundIndex> mutualFunds = gson.fromJson(data, new TypeToken<List<MutualFundIndex>>() {
+			}.getType());
+
+			System.out.println(mutualFunds);
+
+			mutualFunds.stream().forEach(mutualFund -> DataDrizzleService.createMutualFundChart(barChart, mutualFund));
+		} catch (JSONException | IOException e) {
+			Notification notification = new Notification();
+			notification.addMessage("Technical difficulties occured during processing the data");
+			return left(notification);
+		}
+
+		return right(barChart);
+	}
+
+	private static void createMutualFundChart(List<Chart<String, Double>> barChart, MutualFundIndex mutualFund) {
+
+		List<Double> yAxisValues = new ArrayList<>();
+		yAxisValues.add(mutualFund.getPrice());
+		yAxisValues.add(mutualFund.getPrice_open());
+		yAxisValues.add(mutualFund.getDay_high());
+		yAxisValues.add(mutualFund.getDay_low());
+		yAxisValues.add(mutualFund.getFifty_two_week_high());
+		yAxisValues.add(mutualFund.getFifty_two_week_low());
+		yAxisValues.add(mutualFund.getDay_change());
+		yAxisValues.add(mutualFund.getChange_pct());
+		yAxisValues.add(mutualFund.getClose_yesterday());
+//		yAxisValues.add(mutualFund.getMarket_cap());
+//		yAxisValues.add(mutualFund.getVolume());
+//		yAxisValues.add(mutualFund.getShares());
+
+		Chart<String, Double> chart = new Chart<>("bar", stock.getName(), ApplicationConstants.stockIndexText,
+				yAxisValues);
+
+		barChart.add(chart);
+
 	}
 }

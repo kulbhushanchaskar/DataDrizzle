@@ -21,27 +21,46 @@ import com.datadrizzle.share.services.IDataDrizzleService;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class StockController {
-	
-	@Autowired 
+
+	@Autowired
 	private IDataDrizzleService datadrizzleService;
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/stock/getStockPrice")
 	ResponseEntity<Response<List<Chart<String, Double>>>> getStockPrice(@RequestBody List<String> companyNames) {
-		
-		Either<Notification, List<Chart<String, Double>>> serviceResp = datadrizzleService.getStockAndIndexPrice(companyNames);
-		
-		if(!serviceResp.hasNotification())
+
+		Either<Notification, List<Chart<String, Double>>> serviceResp = datadrizzleService
+				.getStockAndIndexPrice(companyNames);
+
+		if (!serviceResp.hasNotification())
 			System.out.println(serviceResp.getResult());
-		
+
 		HttpHeaders headers = new HttpHeaders();
-        headers.add("Responded", "StockController");
-        List<String> msg = new ArrayList<>();
-        msg.add("first msg");
-        msg.add("second msg");
-        
-        return ResponseEntity.accepted().headers(headers).body(new Response<List<Chart<String, Double>>>(msg, serviceResp.getResult(), "200"));
+		headers.add("Responded", "StockController");
+		List<String> msg = new ArrayList<>();
+		msg.add("first msg");
+		msg.add("second msg");
+
+		return ResponseEntity.accepted().headers(headers)
+				.body(new Response<List<Chart<String, Double>>>(msg, serviceResp.getResult(), "200"));
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/mutualfund")
+	ResponseEntity<Response<List<Chart<String, Double>>>> getMutualfund(@RequestBody List<String> companyNames) {
 		
-		
+		Either<Notification, List<Chart<String, Double>>> serviceResp = datadrizzleService
+				.getStockAndIndexPrice(companyNames);
+
+		if (!serviceResp.hasNotification())
+			System.out.println(serviceResp.getResult());
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Responded", "StockController");
+		List<String> msg = new ArrayList<>();
+		msg.add("first msg");
+		msg.add("second msg");
+
+		return ResponseEntity.accepted().headers(headers)
+				.body(new Response<List<Chart<String, Double>>>(msg, serviceResp.getResult(), "200"));
 	}
 
 }
