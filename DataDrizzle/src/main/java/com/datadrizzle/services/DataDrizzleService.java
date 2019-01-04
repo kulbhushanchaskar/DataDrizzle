@@ -174,9 +174,9 @@ public class DataDrizzleService implements IDataDrizzleService {
 		// retrieve stock and index price data from world trading data API.
 
 		try {
-			JSONObject stockJSON = new JSONObject(
+			JSONObject indexJSON = new JSONObject(
 					sendGet(buildURL(companyNames, ApplicationConstants.mutualFundRealTimeIndexAPI)));
-			JSONArray dataArray = stockJSON.getJSONArray("data");
+			JSONArray dataArray = indexJSON.getJSONArray("data");
 
 			Gson gson = new Gson();
 			String data = dataArray.toString()/*.replace("52_week_high", "fifty_two_week_high").replace("52_week_low",
@@ -197,22 +197,36 @@ public class DataDrizzleService implements IDataDrizzleService {
 	}
 
 	private static void createMutualFundChart(List<Chart<String, Double>> barChart, MutualFundIndex mutualFund) {
+		
+		/*
+		 * public static List<String> mutualFundIndexText = Arrays.asList("price","close_yesterday","return_ytd",
+			"net_assets","change_asset_value",
+			"change_pct", "yield_pct","change_pct","return_day","return_1week","return_4week","return_13week",
+			"return_52week","return_156week","return_260week","income_dividend","income_dividend_date","capital_gain",
+			"expense_ratio");
+		 */
 
 		List<Double> yAxisValues = new ArrayList<>();
 		yAxisValues.add(mutualFund.getPrice());
-		yAxisValues.add(mutualFund.getPrice_open());
-		yAxisValues.add(mutualFund.getDay_high());
-		yAxisValues.add(mutualFund.getDay_low());
-		yAxisValues.add(mutualFund.getFifty_two_week_high());
-		yAxisValues.add(mutualFund.getFifty_two_week_low());
-		yAxisValues.add(mutualFund.getDay_change());
-		yAxisValues.add(mutualFund.getChange_pct());
 		yAxisValues.add(mutualFund.getClose_yesterday());
-//		yAxisValues.add(mutualFund.getMarket_cap());
-//		yAxisValues.add(mutualFund.getVolume());
-//		yAxisValues.add(mutualFund.getShares());
+		yAxisValues.add(mutualFund.getReturn_ytd());
+//		yAxisValues.add(mutualFund.getNet_assets());
+		yAxisValues.add(mutualFund.getChange_asset_value());
+		yAxisValues.add(mutualFund.getChange_pct());
+		yAxisValues.add(mutualFund.getYield_pct());
+		yAxisValues.add(mutualFund.getReturn_day());
+		yAxisValues.add(mutualFund.getReturn_1week());
+		yAxisValues.add(mutualFund.getReturn_4week());
+		yAxisValues.add(mutualFund.getReturn_13week());
+		yAxisValues.add(mutualFund.getReturn_52week());
+		yAxisValues.add(mutualFund.getReturn_156week());
+		yAxisValues.add(mutualFund.getReturn_260week());
+		yAxisValues.add(mutualFund.getIncome_dividend());
+//		yAxisValues.add(mutualFund.getIncome_dividend_date());
+		yAxisValues.add(mutualFund.getCapital_gain());
+		yAxisValues.add(mutualFund.getExpense_ratio());
 
-		Chart<String, Double> chart = new Chart<>("bar", stock.getName(), ApplicationConstants.stockIndexText,
+		Chart<String, Double> chart = new Chart<>("bar", mutualFund.getName(), ApplicationConstants.mutualFundIndexText,
 				yAxisValues);
 
 		barChart.add(chart);

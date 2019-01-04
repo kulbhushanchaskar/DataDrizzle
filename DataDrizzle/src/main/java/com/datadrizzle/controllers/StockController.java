@@ -48,7 +48,7 @@ public class StockController {
 	ResponseEntity<Response<List<Chart<String, Double>>>> getMutualfund(@RequestBody List<String> companyNames) {
 		
 		Either<Notification, List<Chart<String, Double>>> serviceResp = datadrizzleService
-				.getStockAndIndexPrice(companyNames);
+				.getMutualFundIndexes(companyNames);
 
 		if (!serviceResp.hasNotification())
 			System.out.println(serviceResp.getResult());
