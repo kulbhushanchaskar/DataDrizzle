@@ -66,9 +66,13 @@ public class StockController {
 	@RequestMapping(method = RequestMethod.POST, value = "/stock/getMutualFundSymbols")
 	ResponseEntity<Response<List<String>>> getMutualfundSymbols() {
 		
-		datadrizzleService.getMutualfundSymbols();
+		Either<Notification, List<String>> serviceResp = datadrizzleService.getMutualfundSymbols();
 		
-		return null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Responded", "StockController");
+		
+		return ResponseEntity.accepted().headers(headers)
+				.body(new Response<List<String>>(null, serviceResp.getResult(), "200"));
 	}
 	
 
