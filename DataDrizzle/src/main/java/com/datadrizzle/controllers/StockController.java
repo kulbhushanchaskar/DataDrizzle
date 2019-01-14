@@ -62,5 +62,14 @@ public class StockController {
 		return ResponseEntity.accepted().headers(headers)
 				.body(new Response<List<Chart<String, Double>>>(msg, serviceResp.getResult(), "200"));
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/stock/getMutualFundSymbols")
+	ResponseEntity<Response<List<String>>> getMutualfundSymbols() {
+		
+		datadrizzleService.getMutualfundSymbols();
+		
+		return null;
+	}
+	
 
 }

@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.teiid.webui.share.beans.TeiidConnection;
 import org.teiid.webui.share.services.ITeiidService;
@@ -28,6 +29,7 @@ import com.datadrizzle.entities.StockAndIndexRealTime;
 import com.datadrizzle.share.ApplicationConstants;
 import com.datadrizzle.share.Either;
 import com.datadrizzle.share.Notification;
+import com.datadrizzle.share.Response;
 import com.datadrizzle.share.dao.IConnectionDAO;
 import com.datadrizzle.share.services.IDataDrizzleService;
 import com.google.gson.Gson;
@@ -232,4 +234,9 @@ public class DataDrizzleService implements IDataDrizzleService {
 		barChart.add(chart);
 
 	}
+	
+	public Either<Notification, List<String>> getMutualfundSymbols() {
+		return right(ApplicationConstants.MUTUAL_FUND_COMPANY_SYMBOLS);
+	}
+	
 }

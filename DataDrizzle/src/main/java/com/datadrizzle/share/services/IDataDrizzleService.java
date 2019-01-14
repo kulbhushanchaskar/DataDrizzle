@@ -15,4 +15,5 @@ public interface IDataDrizzleService {
 	public Either<Notification, List<Chart<String,Integer>>> testConnection(DataDrizzleConnection connection);
 	public Either<Notification, List<Chart<String, Double>>> getStockAndIndexPrice(List<String> companyNames);
 	public Either<Notification, List<Chart<String, Double>>> getMutualFundIndexes(List<String> companyNames);
+	public Either<Notification, List<String>> getMutualfundSymbols();
 }
