@@ -1,7 +1,7 @@
 package com.datadrizzle.services;
 
-import static com.datadrizzle.share.Either.right;
 import static com.datadrizzle.share.Either.left;
+import static com.datadrizzle.share.Either.right;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,16 +12,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.teiid.webui.share.beans.TeiidConnection;
 import org.teiid.webui.share.services.ITeiidService;
 
 import com.datadrizzle.connection.translators.ConnectionTranslator;
+import com.datadrizzle.connection.translators.StockTranslator;
 import com.datadrizzle.entities.Chart;
 import com.datadrizzle.entities.DataDrizzleConnection;
 import com.datadrizzle.entities.MutualFundIndex;
@@ -29,23 +31,32 @@ import com.datadrizzle.entities.StockAndIndexRealTime;
 import com.datadrizzle.share.ApplicationConstants;
 import com.datadrizzle.share.Either;
 import com.datadrizzle.share.Notification;
-import com.datadrizzle.share.Response;
 import com.datadrizzle.share.dao.IConnectionDAO;
+import com.datadrizzle.share.dao.IStockDao;
 import com.datadrizzle.share.services.IDataDrizzleService;
+import com.datadrizzle.ui.model.MutualFundCompany;
+import com.datadrizzle.vo.MutualFundCompanyVO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 @Service
+@Transactional
 public class DataDrizzleService implements IDataDrizzleService {
 
 	@Autowired
 	private IConnectionDAO connectionDAO;
+	
+	@Autowired
+	private IStockDao stockDAO;
 
 	@Autowired
 	private ITeiidService teiidService;
 
 	@Autowired
 	ConnectionTranslator connectionTranslator;
+	
+	@Autowired
+	StockTranslator stockTranslator;
 
 	private final String USER_AGENT = "Mozilla/5.0";
 
@@ -235,8 +246,11 @@ public class DataDrizzleService implements IDataDrizzleService {
 
 	}
 	
-	public Either<Notification, List<String>> getMutualfundSymbols() {
-		return right(ApplicationConstants.MUTUAL_FUND_COMPANY_SYMBOLS);
+	public Either<Notification, List<MutualFundCompany>> getMutualfundSymbols() {
+		
+		List<MutualFundCompanyVO> companies = stockDAO.getAllMutualFundCompanies();
+		return right(stockTranslator.mutualFundVOList2UIModelList(companies));
+		
 	}
 	
 }

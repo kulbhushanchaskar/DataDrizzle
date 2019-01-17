@@ -10,10 +10,11 @@ import com.datadrizzle.entities.DataDrizzleConnection;
 import com.datadrizzle.share.Either;
 import com.datadrizzle.share.Notification;
 import com.datadrizzle.share.Response;
+import com.datadrizzle.ui.model.MutualFundCompany;
 
 public interface IDataDrizzleService {
 	public Either<Notification, List<Chart<String,Integer>>> testConnection(DataDrizzleConnection connection);
 	public Either<Notification, List<Chart<String, Double>>> getStockAndIndexPrice(List<String> companyNames);
 	public Either<Notification, List<Chart<String, Double>>> getMutualFundIndexes(List<String> companyNames);
-	public Either<Notification, List<String>> getMutualfundSymbols();
+	public Either<Notification, List<MutualFundCompany>> getMutualfundSymbols();
 }

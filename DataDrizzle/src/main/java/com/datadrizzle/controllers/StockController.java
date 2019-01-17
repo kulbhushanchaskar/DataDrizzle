@@ -17,6 +17,7 @@ import com.datadrizzle.share.Either;
 import com.datadrizzle.share.Notification;
 import com.datadrizzle.share.Response;
 import com.datadrizzle.share.services.IDataDrizzleService;
+import com.datadrizzle.ui.model.MutualFundCompany;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -63,16 +64,16 @@ public class StockController {
 				.body(new Response<List<Chart<String, Double>>>(msg, serviceResp.getResult(), "200"));
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/stock/getMutualFundSymbols")
-	ResponseEntity<Response<List<String>>> getMutualfundSymbols() {
+	@RequestMapping(method = RequestMethod.POST, value = "/mutualfund/getMutualFundSymbols")
+	ResponseEntity<Response<List<MutualFundCompany>>> getMutualfundSymbols() {
 		
-		Either<Notification, List<String>> serviceResp = datadrizzleService.getMutualfundSymbols();
+		Either<Notification, List<MutualFundCompany>> serviceResp = datadrizzleService.getMutualfundSymbols();
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Responded", "StockController");
 		
 		return ResponseEntity.accepted().headers(headers)
-				.body(new Response<List<String>>(null, serviceResp.getResult(), "200"));
+				.body(new Response<List<MutualFundCompany>>(null, serviceResp.getResult(), "200"));
 	}
 	
 
