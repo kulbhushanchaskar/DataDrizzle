@@ -197,9 +197,9 @@ public class DataDrizzleService implements IDataDrizzleService {
 			List<MutualFundIndex> mutualFunds = gson.fromJson(data, new TypeToken<List<MutualFundIndex>>() {
 			}.getType());
 
-			System.out.println(mutualFunds);
+			System.out.println("========== " + indexJSON);
 
-			mutualFunds.stream().forEach(mutualFund -> DataDrizzleService.createMutualFundChart(barChart, mutualFund));
+			mutualFunds.stream().forEach(mutualFund -> createMutualFundChart(barChart, mutualFund));
 		} catch (JSONException | IOException e) {
 			Notification notification = new Notification();
 			notification.addMessage("Technical difficulties occured during processing the data");
@@ -209,7 +209,7 @@ public class DataDrizzleService implements IDataDrizzleService {
 		return right(barChart);
 	}
 
-	private static void createMutualFundChart(List<Chart<String, Double>> barChart, MutualFundIndex mutualFund) {
+	private void createMutualFundChart(List<Chart<String, Double>> barChart, MutualFundIndex mutualFund) {
 		
 		/*
 		 * public static List<String> mutualFundIndexText = Arrays.asList("price","close_yesterday","return_ytd",
