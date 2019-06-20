@@ -26,8 +26,10 @@ import com.datadrizzle.connection.translators.ConnectionTranslator;
 import com.datadrizzle.connection.translators.StockTranslator;
 import com.datadrizzle.entities.Chart;
 import com.datadrizzle.entities.DataDrizzleConnection;
+import com.datadrizzle.entities.MutualFundHistoryData;
 import com.datadrizzle.entities.MutualFundIndex;
 import com.datadrizzle.entities.StockAndIndexRealTime;
+import com.datadrizzle.services.translators.MutualFundTranslator;
 import com.datadrizzle.share.ApplicationConstants;
 import com.datadrizzle.share.Either;
 import com.datadrizzle.share.Notification;
@@ -95,8 +97,7 @@ public class DataDrizzleService implements IDataDrizzleService {
 			JSONArray dataArray = stockJSON.getJSONArray("data");
 
 			Gson gson = new Gson();
-			String data = dataArray.toString().replace("52_week_high", "fifty_two_week_high").replace("52_week_low",
-					"fifty_two_week_low");
+			String data = dataArray.toString().replace("52", "fifty_two");
 			List<StockAndIndexRealTime> stockList = gson.fromJson(data, new TypeToken<List<StockAndIndexRealTime>>() {
 			}.getType());
 
@@ -160,6 +161,7 @@ public class DataDrizzleService implements IDataDrizzleService {
 	private static void createChart(List<Chart<String, Double>> barChart, StockAndIndexRealTime stock) {
 
 		List<Double> yAxisValues = new ArrayList<>();
+		//convert price to USD
 		yAxisValues.add(stock.getPrice());
 		yAxisValues.add(stock.getPrice_open());
 		yAxisValues.add(stock.getDay_high());
@@ -247,10 +249,26 @@ public class DataDrizzleService implements IDataDrizzleService {
 	}
 	
 	public Either<Notification, List<MutualFundCompany>> getMutualfundSymbols() {
-		
 		List<MutualFundCompanyVO> companies = stockDAO.getAllMutualFundCompanies();
-		return right(stockTranslator.mutualFundVOList2UIModelList(companies));
-		
+		return right(stockTranslator.mutualFundVOList2UIModelList(companies));		
+	}
+	
+	public Either<Notification, List<MutualFundHistoryData>> getMutualfundHistory(String symbol) {
+		try {
+			JSONObject indexJSON = new JSONObject(
+					sendGet(buildURL(Arrays.asList(symbol), ApplicationConstants.mutualFundHistoryAPI)));
+			JSONObject mutualFundHistoryJSON = (JSONObject) indexJSON.get("history");
+			
+			List<MutualFundHistoryData> mutualFundHistory = MutualFundTranslator.mutualFundHistoryData(mutualFundHistoryJSON);
+			
+			System.out.println(mutualFundHistory);
+			return right(mutualFundHistory);
+		}
+		catch(JSONException | IOException e) {
+			Notification notification = new Notification();
+			notification.addMessage("Technical difficulties occured during processing the data");
+			return left(notification);
+		}
 	}
 	
 }

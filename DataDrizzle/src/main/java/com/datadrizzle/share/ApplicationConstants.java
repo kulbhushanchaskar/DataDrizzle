@@ -6,7 +6,7 @@ import java.util.List;
 public class ApplicationConstants {
 	public static String teiidServerPropertiesFileName = "teiidServer.properties";
 	public static String dozerBeanMappingXML = "dozerBeanMapping.xml";
-	public static String worldTradingDataAPIToken = "Naikab6uxOw5RNI4y9Fr5UHk7S4InbbNLggeObFp7C9bDwTyeOpQ6Awj6LfxzmgVByV2ly";
+	public static String worldTradingDataAPIToken = "Na6uxOw5RNI4y97S4InbbNLggeObFp7C9bDwTyeOpQ6Awj6LfxzmgVByV2ly";
 	public static String stockAndRealTimeIndexAPI = "https://www.worldtradingdata.com/api/v1/stock";
 	public static List<String> stockIndexText = Arrays.asList("price","price_open","day_high","day_low","fifty_two_week_high",
 			"fifty_two_week_low", "day_change","change_pct","close_yesterday","market_cap","volume","shares");
@@ -29,6 +29,9 @@ public class ApplicationConstants {
 			"expense_ratio");
 	
 	public static String mutualFundRealTimeIndexAPI = "https://www.worldtradingdata.com/api/v1/mutualfund";
+	public static String mutualFundHistoryAPI = "https://api.worldtradingdata.com/api/v1/history";
+	
+	public static String forexRealTime = "https://api.worldtradingdata.com/api/v1/forex?base=USD&api_token="+worldTradingDataAPIToken;
 	
 	//DWS RREEF Real Assets Fund - Class A
 	//Aberdeen Income Builder Fund Class A

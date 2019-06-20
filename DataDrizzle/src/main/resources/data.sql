@@ -154,6 +154,9 @@ insert into MUTUAL_FUND_COMPANY values( 148	,'ABNKX'	,'AB Bond Inflation Strateg
 insert into MUTUAL_FUND_COMPANY values( 149	,'ABNOX'	,'AB Bond Inflation Strategy Class 1');
 insert into MUTUAL_FUND_COMPANY values( 150	,'ABNRX'	,'AB Bond Inflation Strategy Class R');
 
+DROP TABLE IF EXISTS USER;
+CREATE TABLE USER (ID INT PRIMARY KEY, username VARCHAR(50), password VARCHAR(100), salary float, age int);
+
 TRUNCATE TABLE USER;
 INSERT INTO User (id, username, password, salary, age) VALUES (1, 'Alex123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 3456, 33);
 INSERT INTO User (id, username, password, salary, age) VALUES (2, 'Tom234', '$2a$04$PCIX2hYrve38M7eOcqAbCO9UqjYg7gfFNpKsinAxh99nms9e.8HwK', 7823, 23);

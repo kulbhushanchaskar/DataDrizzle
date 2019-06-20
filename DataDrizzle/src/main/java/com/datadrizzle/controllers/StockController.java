@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.datadrizzle.entities.Chart;
+import com.datadrizzle.entities.MutualFundHistoryData;
 import com.datadrizzle.share.Either;
 import com.datadrizzle.share.Notification;
 import com.datadrizzle.share.Response;
@@ -76,5 +77,14 @@ public class StockController {
 				.body(new Response<List<MutualFundCompany>>(null, serviceResp.getResult(), "200"));
 	}
 	
-
+	@RequestMapping(method = RequestMethod.POST, value = "/mutualfund/history")
+	ResponseEntity<Response<List<MutualFundHistoryData>>> getMutualFundHistory(@RequestBody String symbol) {
+		Either<Notification, List<MutualFundHistoryData>> serviceResp = datadrizzleService.getMutualfundHistory(symbol);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Responded", "StockController");
+		
+		return ResponseEntity.accepted().headers(headers)
+				.body(new Response<List<MutualFundHistoryData>>(null, serviceResp.getResult(), "200"));
+	}
 }

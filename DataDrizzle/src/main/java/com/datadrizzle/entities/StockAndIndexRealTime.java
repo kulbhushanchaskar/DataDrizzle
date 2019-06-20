@@ -3,6 +3,17 @@ package com.datadrizzle.entities;
 import java.util.Currency;
 import java.util.TimeZone;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class StockAndIndexRealTime {
 
 	/*"symbol": "AAPL",
@@ -30,7 +41,7 @@ public class StockAndIndexRealTime {
 //	String symbol;
 	String name;
 	double price;
-//	String currency;
+	String currency;
 	double price_open;
 	double day_high;
 	double day_low;
@@ -48,121 +59,4 @@ public class StockAndIndexRealTime {
 //	String timezone_name;
 //	String gmt_offset;
 //	String last_trade_time;
-	
-	public StockAndIndexRealTime() {
-		super();
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public double getPrice_open() {
-		return price_open;
-	}
-
-	public void setPrice_open(double price_open) {
-		this.price_open = price_open;
-	}
-
-	public double getDay_high() {
-		return day_high;
-	}
-
-	public void setDay_high(double day_high) {
-		this.day_high = day_high;
-	}
-
-	public double getDay_low() {
-		return day_low;
-	}
-
-	public void setDay_low(double day_low) {
-		this.day_low = day_low;
-	}
-
-	public double getFifty_two_week_high() {
-		return fifty_two_week_high;
-	}
-
-	public void setFifty_two_week_high(double fifty_two_week_high) {
-		this.fifty_two_week_high = fifty_two_week_high;
-	}
-
-	public double getFifty_two_week_low() {
-		return fifty_two_week_low;
-	}
-
-	public void setFifty_two_week_low(double fifty_two_week_low) {
-		this.fifty_two_week_low = fifty_two_week_low;
-	}
-
-	public double getDay_change() {
-		return day_change;
-	}
-
-	public void setDay_change(double day_change) {
-		this.day_change = day_change;
-	}
-
-	public double getChange_pct() {
-		return change_pct;
-	}
-
-	public void setChange_pct(double change_pct) {
-		this.change_pct = change_pct;
-	}
-
-	public double getClose_yesterday() {
-		return close_yesterday;
-	}
-
-	public void setClose_yesterday(double close_yesterday) {
-		this.close_yesterday = close_yesterday;
-	}
-
-	public double getMarket_cap() {
-		return market_cap;
-	}
-
-	public void setMarket_cap(double market_cap) {
-		this.market_cap = market_cap;
-	}
-
-	public double getVolume() {
-		return volume;
-	}
-
-	public void setVolume(double volume) {
-		this.volume = volume;
-	}
-
-	public double getShares() {
-		return shares;
-	}
-
-	public void setShares(double shares) {
-		this.shares = shares;
-	}
-
-	@Override
-	public String toString() {
-		return "StockAndIndexRealTime [name=" + name + ", price=" + price + ", price_open=" + price_open + ", day_high="
-				+ day_high + ", day_low=" + day_low + ", fifty_two_week_high=" + fifty_two_week_high
-				+ ", fifty_two_week_low=" + fifty_two_week_low + ", day_change=" + day_change + ", change_pct="
-				+ change_pct + ", close_yesterday=" + close_yesterday + ", market_cap=" + market_cap + ", volume="
-				+ volume + ", shares=" + shares + "]";
-	}
 }
