@@ -8,9 +8,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -33,6 +39,7 @@ import com.datadrizzle.services.translators.MutualFundTranslator;
 import com.datadrizzle.share.ApplicationConstants;
 import com.datadrizzle.share.Either;
 import com.datadrizzle.share.Notification;
+import com.datadrizzle.share.Response;
 import com.datadrizzle.share.dao.IConnectionDAO;
 import com.datadrizzle.share.dao.IStockDao;
 import com.datadrizzle.share.services.IDataDrizzleService;
@@ -62,10 +69,17 @@ public class DataDrizzleService implements IDataDrizzleService {
 
 	private final String USER_AGENT = "Mozilla/5.0";
 
-	public Either<Notification, List<Chart<String, Integer>>> testConnection(DataDrizzleConnection connection) {
-		TeiidConnection teiidConnection = connectionTranslator.dataDrizzleConn2TeiidConn(connection);
+	public Response<List<String>> testConnection(DataDrizzleConnection connection) {
+		//TeiidConnection teiidConnection = connectionTranslator.dataDrizzleConn2TeiidConn(connection);
+		
+		
+		//We are going to check connectivity with the database using jdbc
+		Response<List<String>> dbConnectionResp = getDatabaseTables(connection);
+		
+		
+		return dbConnectionResp;
 
-		List<Chart<String, Integer>> barChart = new ArrayList<>();
+		/*List<Chart<String, Integer>> barChart = new ArrayList<>();
 
 		String type = "bar";
 		String name = "SF Zoo";
@@ -81,9 +95,53 @@ public class DataDrizzleService implements IDataDrizzleService {
 		barChart.add(chart1);
 		barChart.add(chart2);
 
-		return right(barChart);
+		return right(barChart);*/
 
 		// return teiidService.testConnection(teiidConnection);
+	}
+	
+	private Response<List<String>> getDatabaseTables(DataDrizzleConnection connection) {
+		
+		Map<String,String> connectionParameters = connection.getConnectionParameters();
+		String connectionName = connectionParameters.get("connectionName");
+		String host = connectionParameters.get("host");
+		String username = connectionParameters.get("username");
+		String pwd = connectionParameters.get("pwd");
+		String databaseName = connectionParameters.get("databaseName");
+		String port = connectionParameters.get("port");
+		Notification notification = new Notification();
+		List<String> tableList = new ArrayList<String>();
+		
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+databaseName, username, pwd)) {
+	        if (conn != null) {
+	            System.out.println("Connected to the database!");
+	        } else {
+	        	notification.addErrorMessage("Error while connecting to database");
+	            System.out.println("Failed to make connection!");
+	            return new Response<List<String>>(notification, tableList, "200");
+	        }
+	        
+	        //Get database tables
+	        DatabaseMetaData dbmd = conn.getMetaData();
+            String[] types = {"TABLE"};
+            ResultSet rs = dbmd.getTables(databaseName, null, "%", types);
+			while (rs.next()) {
+				tableList.add(rs.getString(3));
+			}
+
+        } catch (SQLException e) {
+        	notification.addErrorMessage("Error while connecting to database");
+            e.printStackTrace();
+//            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+            return new Response<List<String>>(notification, tableList, "200");
+        } catch (Exception e) {
+        	notification.addErrorMessage("Error while connecting to database");
+            e.printStackTrace();
+            return new Response<List<String>>(notification, tableList, "200");
+        }
+		
+		notification.addSuccess("Connection to the database is successful");
+		return new Response<List<String>>(notification, tableList, "200");
 	}
 
 	public Either<Notification, List<Chart<String, Double>>> getStockAndIndexPrice(List<String> companyNames) {
@@ -106,7 +164,7 @@ public class DataDrizzleService implements IDataDrizzleService {
 			stockList.stream().forEach(stock -> DataDrizzleService.createChart(barChart, stock));
 		} catch (JSONException | IOException e) {
 			Notification notification = new Notification();
-			notification.addMessage("Technical difficulties occured during processing the data");
+			notification.addErrorMessage("Technical difficulties occured during processing the data");
 			return left(notification);
 		}
 
@@ -204,7 +262,7 @@ public class DataDrizzleService implements IDataDrizzleService {
 			mutualFunds.stream().forEach(mutualFund -> createMutualFundChart(barChart, mutualFund));
 		} catch (JSONException | IOException e) {
 			Notification notification = new Notification();
-			notification.addMessage("Technical difficulties occured during processing the data");
+			notification.addErrorMessage("Technical difficulties occured during processing the data");
 			return left(notification);
 		}
 
@@ -266,7 +324,7 @@ public class DataDrizzleService implements IDataDrizzleService {
 		}
 		catch(JSONException | IOException e) {
 			Notification notification = new Notification();
-			notification.addMessage("Technical difficulties occured during processing the data");
+			notification.addErrorMessage("Technical difficulties occured during processing the data");
 			return left(notification);
 		}
 	}

@@ -33,9 +33,7 @@ public class ConnectionController {
 	@RequestMapping(method = RequestMethod.POST, value = "/create/connection")
 	ResponseEntity<Response<List<Chart<String, Integer>>>> createConnection(@RequestBody DataDrizzleConnection connection) {
 		
-		Either<Notification, List<Chart<String, Integer>>> serviceResp = datadrizzleService.testConnection(connection);
-		if(!serviceResp.hasNotification())
-			System.out.println(serviceResp.getResult());
+		Response<List<String>> serviceResp = datadrizzleService.testConnection(connection);
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "ConnectionController");
@@ -43,7 +41,8 @@ public class ConnectionController {
         msg.add("first msg");
         msg.add("second msg");
         
-        return ResponseEntity.accepted().headers(headers).body(new Response<List<Chart<String, Integer>>>(msg, serviceResp.getResult(), "200"));
+//        return ResponseEntity.accepted().headers(headers).body(new Response<List<Chart<String, Integer>>>(msg, serviceResp.getResult(), "200"));
+        return null;
 		
 	}
 	
@@ -52,4 +51,19 @@ public class ConnectionController {
     public String welcomeUser(@RequestParam(name="name", required=false, defaultValue="Java Fan") String name) {
         return "Welcome";
     }
+    
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/test/connection")
+	ResponseEntity<Response<List<String>>> testConnection(@RequestBody DataDrizzleConnection connection) {
+		Response<List<String>> serviceResp = datadrizzleService.testConnection(connection);
+		
+		HttpHeaders headers = new HttpHeaders();
+        headers.add("Responded", "ConnectionController");
+        List<String> msg = new ArrayList<>();
+        msg.add("first msg");
+        msg.add("second msg");
+        
+        return ResponseEntity.accepted().headers(headers).body(serviceResp);
+	}
+    
 }

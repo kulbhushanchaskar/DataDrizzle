@@ -42,8 +42,9 @@ public class StockController {
 		msg.add("first msg");
 		msg.add("second msg");
 
-		return ResponseEntity.accepted().headers(headers)
-				.body(new Response<List<Chart<String, Double>>>(msg, serviceResp.getResult(), "200"));
+		/*return ResponseEntity.accepted().headers(headers)
+				.body(new Response<List<Chart<String, Double>>>(msg, serviceResp.getResult(), "200"));*/
+		return null;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/mutualfund")
@@ -61,8 +62,11 @@ public class StockController {
 		msg.add("first msg");
 		msg.add("second msg");
 
-		return ResponseEntity.accepted().headers(headers)
-				.body(new Response<List<Chart<String, Double>>>(msg, serviceResp.getResult(), "200"));
+		/*
+		 * return ResponseEntity.accepted().headers(headers) .body(new
+		 * Response<List<Chart<String, Double>>>(msg, serviceResp.getResult(), "200"));
+		 */
+		return null;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/mutualfund/getMutualFundSymbols")

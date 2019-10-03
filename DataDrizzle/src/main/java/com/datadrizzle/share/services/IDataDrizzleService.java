@@ -14,7 +14,7 @@ import com.datadrizzle.share.Response;
 import com.datadrizzle.ui.model.MutualFundCompany;
 
 public interface IDataDrizzleService {
-	public Either<Notification, List<Chart<String,Integer>>> testConnection(DataDrizzleConnection connection);
+	public Response<List<String>> testConnection(DataDrizzleConnection connection);
 	public Either<Notification, List<Chart<String, Double>>> getStockAndIndexPrice(List<String> companyNames);
 	public Either<Notification, List<Chart<String, Double>>> getMutualFundIndexes(List<String> companyNames);
 	public Either<Notification, List<MutualFundCompany>> getMutualfundSymbols();
