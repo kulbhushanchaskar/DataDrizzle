@@ -52,7 +52,7 @@ import org.uberfire.paging.PageResponse;
  * @author mdrillin@redhat.com
  */
 @Service
-public class QueryService implements IQueryService {
+public class QueryService /*implements IQueryService */{/*
 
 	private static final String UPDATE = "UPDATE";
 	private static final String INSERT = "INSERT";
@@ -67,9 +67,9 @@ public class QueryService implements IQueryService {
 	private static final String COLUMN_TYPE = "COLUMN_TYPE";
 	private static final String TYPE_NAME = "TYPE_NAME";
 
-    /**
+    *//**
      * Constructor.
-     */
+     *//*
     public QueryService() {
     }
     
@@ -135,12 +135,12 @@ public class QueryService implements IQueryService {
     	}
     }
     
-    /*
+    
      * Get List of all available Datasource Names. The 'Datasource Names' are the jndi names of the
      * queryable jdbc sources on the server.
      * @param teiidOnly 'true' if only Teiid sources are to be returned, 'false' otherwise.
      * @return the list of datasource names
-     */
+     
     public List<String> getDataSourceNames(boolean teiidOnly) throws DataVirtUiException {
     	// Get DataSources Map
     	JdbcSourceHelper jdbcHelper = JdbcSourceHelper.getInstance();
@@ -166,11 +166,11 @@ public class QueryService implements IQueryService {
     	return resultList;
     }
     
-    /*
+    
      * Get List of tables and procedures for the supplied Datasource Name. 
      * @param dataSource the name of the data source.
      * @return the list of table and procedure names
-     */
+     
     public List<QueryTableProcBean> getTablesAndProcedures(String dataSourceJndiName, String dsName) throws DataVirtUiException {
     	// Get DataSources Mape
     	Map<String,DataSource> mDatasources = JdbcSourceHelper.getInstance().getDataSourceMap();
@@ -205,12 +205,12 @@ public class QueryService implements IQueryService {
     	return tablesAndProcs;
     }
 
-    /*
+    
      * Test the connection to the supplied DataSource.  Return status message of connection attempt.
      * @param dataSourceJndiName the jndi name of the data source.
      * @param dsName the name of the data source
      * @return the status message - 'OK' if connection is ok.
-     */
+     
     public String testConnection(String dataSourceJndiName,String dsName) {
     	String statusMessage = null;
     	
@@ -251,10 +251,10 @@ public class QueryService implements IQueryService {
 		return Constants.OK;
     }
     
-    /*
+    
      * (non-Javadoc)
      * @see org.teiid.tools.webquery.client.TeiidService#executeSql(java.lang.String, java.lang.String)
-     */
+     
     public QueryResultSetBean executeSql(int page, String dataSource, String sql) throws DataVirtUiException {
     	int pageSize = Constants.QUERY_RESULTS_TABLE_PAGE_SIZE;
     	
@@ -549,12 +549,12 @@ public class QueryService implements IQueryService {
     	return response;
     }
     
-    /*
+    
      * Create a DataItem to pass back to client for each result
      * @param resultSet the SQL ResultSet
      * @param index the ResultSet index for the object
      * @return the DataItem result
-     */
+     
     private String getColValue(ResultSet resultSet, int index) throws SQLException {
     	String colString = null;
     	//String type = "string";
@@ -579,12 +579,12 @@ public class QueryService implements IQueryService {
     	return colString;
     }
     
-    /*
+    
      * Create a DataItem to pass back to client for each result
      * @param resultSet the SQL ResultSet
      * @param index the ResultSet index for the object
      * @return the DataItem result
-     */
+     
     private String getColType(ResultSet resultSet, int index) throws SQLException {
     	String type = "string";
     	Object obj = resultSet.getObject(index);
@@ -599,11 +599,11 @@ public class QueryService implements IQueryService {
     	return type;
     }
 
-    /*
+    
      * Get List of Tables using the supplied connection
      * @param connection the JDBC connection
      * @return the list of table names
-     */
+     
     private List<QueryTableProcBean> getTeiidTables(Connection connection, String catalogName, String schemaName) throws DataVirtUiException {
     	// Get the list of Tables
     	List<String> tableNameList = new ArrayList<String>();
@@ -657,10 +657,10 @@ public class QueryService implements IQueryService {
     	return resultList;
     }
     
-    /*
+    
      * Does a single call to test the connection.  Throws exception if there is a problem.
      * @param connection the JDBC connection
-     */
+     
     private void doTestConn(Connection connection, String catalogName, String schemaName) throws DataVirtUiException {
     	if(connection!=null) {
     		try {
@@ -672,11 +672,11 @@ public class QueryService implements IQueryService {
     	}
     }
     
-    /*
+    
      * Get List of Procedures using the supplied connection
      * @param connection the JDBC connection
      * @return the list of procedure names
-     */
+     
     private List<QueryTableProcBean> getTeiidProcedures(Connection connection) throws DataVirtUiException {
     	// Get the list of Procedures
     	List<String> procNameList = new ArrayList<String>();
@@ -727,12 +727,12 @@ public class QueryService implements IQueryService {
     	return resultList;
     }
 
-    /*
+    
      * Get List of Column names using the supplied connection and table name
      * @param connection the JDBC connection
      * @param fullTableName the Table name to get columns
      * @return the list of QueryColumnBeans
-     */
+     
     private List<QueryColumnBean> getTeiidColumnsForTable(Connection connection, String fullTableName) throws DataVirtUiException {
     	
     	List<QueryColumnBean> resultList = new ArrayList<QueryColumnBean>();
@@ -759,12 +759,12 @@ public class QueryService implements IQueryService {
     	return resultList;
     }
 
-    /*
+    
      * Get List of Column names using the supplied connection and procedure name
      * @param connection the JDBC connection
      * @param fullProcName the Procedure name to get columns
      * @return the array of Column names
-     */
+     
     private List<QueryColumnBean> getColumnsForProcedure(Connection connection,String fullProcName) throws DataVirtUiException {
 
     	List<QueryColumnBean> resultList = new ArrayList<QueryColumnBean>();
@@ -803,11 +803,11 @@ public class QueryService implements IQueryService {
     	return resultList;
     }
 
-    /*
+    
      * Interprets the procedure column type codes from jdbc call to strings
      * @intStr the stringified code
      * @return the direction type
-     */
+     
     private String getProcColumnDirType(String intStr) {
     	String result = "UNKNOWN";
     	if(intStr!=null) {
@@ -826,9 +826,9 @@ public class QueryService implements IQueryService {
     	return result;
     }
 
-    /*
+    
      * Get Connection for the specified DataSource Name from the Map of DataSources
-     */
+     
     private Connection getConnection (String datasourceName, Map<String,DataSource> mDatasources) throws SQLException {
     	Connection connection = null;
     	if(mDatasources!=null) {
@@ -840,13 +840,13 @@ public class QueryService implements IQueryService {
     	return connection;
     }
 
-    /*
+    
      * Close the supplied connection
-     */
+     
     private void closeConnection(Connection conn) throws SQLException {
     	if(conn!=null) {
     		conn.close();
     	}
     }
         
-}
+*/}

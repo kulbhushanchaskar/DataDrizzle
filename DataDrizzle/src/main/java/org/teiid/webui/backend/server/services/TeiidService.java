@@ -1,63 +1,22 @@
 /*
- * Copyright 2014 JBoss Inc
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+  Copyright 2014 JBoss Inc
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+        http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.*/
+ 
 package org.teiid.webui.backend.server.services;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.teiid.adminapi.PropertyDefinition;
-import org.teiid.adminapi.VDB;
-import org.teiid.adminapi.VDB.Status;
-import org.teiid.adminapi.impl.ModelMetaData;
-import org.teiid.adminapi.impl.VDBMetaData;
-import org.teiid.webui.backend.server.api.AdminApiClientAccessor;
-import org.teiid.webui.backend.server.services.util.VdbHelper;
-import org.teiid.webui.share.Constants;
-import org.teiid.webui.share.DriverHelper;
-import org.teiid.webui.share.TranslatorHelper;
-import org.teiid.webui.share.beans.DataSourceDetailsBean;
-import org.teiid.webui.share.beans.DataSourcePageRow;
-import org.teiid.webui.share.beans.DataSourcePropertyBean;
-import org.teiid.webui.share.beans.DataSourceWithVdbDetailsBean;
-import org.teiid.webui.share.beans.TeiidConnection;
-import org.teiid.webui.share.beans.TranslatorImportPropertyBean;
-import org.teiid.webui.share.beans.VdbDetailsBean;
-import org.teiid.webui.share.beans.VdbModelBean;
-import org.teiid.webui.share.beans.ViewModelRequestBean;
-import org.teiid.webui.share.exceptions.DataVirtUiException;
-import org.teiid.webui.share.services.IQueryService;
 import org.teiid.webui.share.services.ITeiidService;
-import org.teiid.webui.share.services.StringUtils;
-import org.uberfire.paging.PageRequest;
-import org.uberfire.paging.PageResponse;
-
-import com.datadrizzle.share.Either;
-import static com.datadrizzle.share.Either.left;
-import static com.datadrizzle.share.Either.right;
-import com.datadrizzle.share.Notification;
 
 /**
  * Concrete implementation of the Teiid service. This service is used to
@@ -66,7 +25,7 @@ import com.datadrizzle.share.Notification;
  * @author mdrillin@redhat.com
  */
 @Service
-public class TeiidService implements ITeiidService {
+public class TeiidService /*implements ITeiidService */{/*
 
 	private static final String DRIVER_KEY = "driver-name";
 	private static final String CLASSNAME_KEY = "class-name";
@@ -85,9 +44,9 @@ public class TeiidService implements ITeiidService {
 	@Autowired
 	private IQueryService queryService;
 
-	/**
+	*//**
 	 * Constructor.
-	 */
+	 *//*
 	public TeiidService() {
 	}
 
@@ -148,7 +107,7 @@ public class TeiidService implements ITeiidService {
 		return response;
 	}
 
-	/**
+	*//**
 	 * Find all of the 'raw' server sources (not preview sources). For each
 	 * source, get the type. Also, check for a corresponding VDB with the
 	 * supplied prefix. If found, set the VDB flag and translator
@@ -157,7 +116,7 @@ public class TeiidService implements ITeiidService {
 	 *            filter string
 	 * @param srcVdbPrefix
 	 *            source VDB prefix for the corresponding src vdb
-	 */
+	 *//*
 	public List<DataSourcePageRow> getDataSources(final String filters1, final String srcVdbPrefix) {
 
 		// Names of the existing DataService VDBs
@@ -250,12 +209,12 @@ public class TeiidService implements ITeiidService {
 		// setting values for VDB and datasource
 		DataSourceWithVdbDetailsBean dataSrcVDBDetailsBean = getDSWithVDBDetailsBean(teiidConnection);
 		
-		/*try {
+		try {
 			createDataSourceWithVdb(dataSrcVDBDetailsBean, 5000);
 		} catch (DataVirtUiException e) {
 			e.printStackTrace();
 //			return left
-		}*/
+		}
 		
 		
 		return right("Test Connection Successfull");
@@ -391,11 +350,11 @@ public class TeiidService implements ITeiidService {
 		return modelImportProps;
 	}
 
-	/**
+	*//**
 	 * Gets the current DataSources
 	 * 
 	 * @throws DataVirtUiException
-	 */
+	 *//*
 	public List<String> getDataSourceNames() throws DataVirtUiException {
 		List<String> dsList = new ArrayList<String>();
 
@@ -417,11 +376,11 @@ public class TeiidService implements ITeiidService {
 		return dsList;
 	}
 
-	/**
+	*//**
 	 * Gets the current Translators
 	 * 
 	 * @throws DataVirtUiException
-	 */
+	 *//*
 	public List<String> getTranslators() throws DataVirtUiException {
 		List<String> resultList = new ArrayList<String>();
 
@@ -644,13 +603,13 @@ public class TeiidService implements ITeiidService {
 		return propertyDefnList;
 	}
 
-	/**
+	*//**
 	 * Determine if a source is Google type
 	 * 
 	 * @param propertyItems
 	 *            the list of properties for the source
 	 * @return 'true' if google type, 'false' if not
-	 */
+	 *//*
 	private static boolean isGoogleSource(Collection<? extends PropertyDefinition> propDefns) {
 		boolean isGoogle = false;
 		for (PropertyDefinition pDefn : propDefns) {
@@ -666,13 +625,13 @@ public class TeiidService implements ITeiidService {
 		return isGoogle;
 	}
 
-	/*
-	 * Get the default value for the Managed ConnectionFactory class
-	 * 
-	 * @param propDefns the collection of property definitions
-	 * 
-	 * @return default value of the ManagedConnectionFactory, null if not found.
-	 */
+	
+	  Get the default value for the Managed ConnectionFactory class
+	  
+	  @param propDefns the collection of property definitions
+	  
+	  @return default value of the ManagedConnectionFactory, null if not found.
+	 
 	private String getManagedConnectionFactoryClassDefault(Collection<? extends PropertyDefinition> propDefns) {
 		String resultValue = null;
 		for (PropertyDefinition pDefn : propDefns) {
@@ -684,14 +643,14 @@ public class TeiidService implements ITeiidService {
 		return resultValue;
 	}
 
-	/**
+	*//**
 	 * Get the Driver name for the supplied DataSource name - from the
 	 * TeiidServer
 	 * 
 	 * @param dsName
 	 *            the data source name
 	 * @return the dataSource driver name
-	 */
+	 *//*
 	public String getDataSourceType(String dsName) throws DataVirtUiException {
 		Properties dsProps = null;
 		try {
@@ -702,14 +661,14 @@ public class TeiidService implements ITeiidService {
 		return getDataSourceType(dsProps);
 	}
 
-	/**
+	*//**
 	 * Get the Driver name for the supplied DataSource name - from the
 	 * TeiidServer
 	 * 
 	 * @param dsProps
 	 *            the data source properties
 	 * @return the dataSource driver name
-	 */
+	 *//*
 	private String getDataSourceType(Properties dsProps) {
 		if (dsProps == null)
 			return Constants.STATUS_UNKNOWN;
@@ -725,13 +684,13 @@ public class TeiidService implements ITeiidService {
 		return driverName;
 	}
 
-	/**
+	*//**
 	 * Get the dynamic VDB xml
 	 * 
 	 * @param vdbName
 	 *            the name of the vdb
 	 * @return the vdb xml text
-	 */
+	 *//*
 	public String getVdbXml(String vdbName) throws DataVirtUiException {
 		String vdbXml = null;
 
@@ -792,7 +751,7 @@ public class TeiidService implements ITeiidService {
 		createSourceVdbWithTeiidDS(bean, vdbDeployTimeoutSec);
 	}
 
-	/**
+	*//**
 	 * Create a source VDB and its corresponding teiid source
 	 * 
 	 * @param bean
@@ -800,7 +759,7 @@ public class TeiidService implements ITeiidService {
 	 * @param vdbDeployTimeoutSec
 	 *            the deployment timeout in seconds
 	 * @throws DataVirtUiException
-	 */
+	 *//*
 	public void createSourceVdbWithTeiidDS(DataSourceWithVdbDetailsBean bean, int vdbDeployTimeoutSec)
 			throws DataVirtUiException {
 		// Get all VDBS that use the sourceVDB. They will need to be redeployed.
@@ -864,7 +823,7 @@ public class TeiidService implements ITeiidService {
 		}
 	}
 
-	/**
+	*//**
 	 * Deploys a SourceVDB for the specified dataSource, if it doesnt already
 	 * exist
 	 * 
@@ -880,7 +839,7 @@ public class TeiidService implements ITeiidService {
 	 *            the name of the translator
 	 * @param importProps
 	 *            the import properties
-	 */
+	 *//*
 	private String deploySourceVDB(String sourceVDBName, String modelName, String dataSourceName, String jndiName,
 			String translator, Properties importProps, String ddl) throws DataVirtUiException {
 		try {
@@ -926,7 +885,7 @@ public class TeiidService implements ITeiidService {
 
 	}
 
-	/**
+	*//**
 	 * Deploys a VDB and waits for it to load
 	 * 
 	 * @param theVDB
@@ -934,7 +893,7 @@ public class TeiidService implements ITeiidService {
 	 * @param vdbName
 	 *            the VDB name
 	 * @throws Exception
-	 */
+	 *//*
 	private void deployVdb(VDBMetaData theVDB, String vdbName, int deploymentTimeout) throws Exception {
 		// If it exists, undeploy it
 		byte[] vdbBytes = vdbHelper.getVdbByteArray(theVDB);
@@ -948,13 +907,13 @@ public class TeiidService implements ITeiidService {
 		waitForVDBLoad(vdbName, 1, deploymentTimeout);
 	}
 
-	/*
-	 * Get the error messages (if any) for the supplied VDB.
-	 * 
-	 * @param vdbName the name of the VDB
-	 * 
-	 * @return the Error Message string, or 'success' if none
-	 */
+	
+	  Get the error messages (if any) for the supplied VDB.
+	  
+	  @param vdbName the name of the VDB
+	  
+	  @return the Error Message string, or 'success' if none
+	 
 	private String getVDBStatusMessage(String vdbName) throws DataVirtUiException {
 		// Get deployed VDB and check status
 		VDBMetaData theVDB;
@@ -1006,11 +965,11 @@ public class TeiidService implements ITeiidService {
 		return jndiName;
 	}
 
-	/*
-	 * Get any VDB that has the supplied import VDB
-	 * 
-	 * @param importVdbName the name of the import VDB
-	 */
+	
+	  Get any VDB that has the supplied import VDB
+	  
+	  @param importVdbName the name of the import VDB
+	 
 	private Collection<VDBMetaData> getVdbsWithImport(String importVdbName) {
 		Collection<VDBMetaData> vdbsWithImport = new ArrayList<VDBMetaData>();
 
@@ -1032,12 +991,12 @@ public class TeiidService implements ITeiidService {
 		return vdbsWithImport;
 	}
 
-	/*
-	 * Create the specified VDB "teiid-local" source on the server. If it
-	 * already exists, delete it first.
-	 * 
-	 * @param vdbName the name of the VDB for the connection
-	 */
+	
+	  Create the specified VDB "teiid-local" source on the server. If it
+	  already exists, delete it first.
+	  
+	  @param vdbName the name of the VDB for the connection
+	 
 	private void createVdbDataSource(String vdbName) throws DataVirtUiException {
 		Properties vdbProps = new Properties();
 		vdbProps.put("connection-url", "jdbc:teiid:" + vdbName + ";useJDBC4ColumnNameAndLabelSemantics=false");
@@ -1048,16 +1007,16 @@ public class TeiidService implements ITeiidService {
 		addDataSource(vdbName, "teiid-local", vdbProps);
 	}
 
-	/*
-	 * Create the specified source on the server. If it already exists, delete
-	 * it first - then redeploy
-	 * 
-	 * @param sourceName the name of the source to add
-	 * 
-	 * @param templateName the name of the template for the source
-	 * 
-	 * @param sourcePropMap the map of property values for the specified source
-	 */
+	
+	  Create the specified source on the server. If it already exists, delete
+	  it first - then redeploy
+	  
+	  @param sourceName the name of the source to add
+	  
+	  @param templateName the name of the template for the source
+	  
+	  @param sourcePropMap the map of property values for the specified source
+	 
 	private void addDataSource(String sourceName, String templateName, Properties sourceProps)
 			throws DataVirtUiException {
 		try {
@@ -1071,7 +1030,7 @@ public class TeiidService implements ITeiidService {
 		}
 	}
 
-	/**
+	*//**
 	 * Delete a dataSource and a VDB. Used to delete a VDB which is exposed as a
 	 * source in one operation
 	 * 
@@ -1080,7 +1039,7 @@ public class TeiidService implements ITeiidService {
 	 * @param vdbName
 	 *            the vdb name
 	 * @throws DataVirtUiException
-	 */
+	 *//*
 	@Override
 	public List<VdbDetailsBean> deleteDataSourceAndVdb(String dsName, String vdbName) throws DataVirtUiException {
 		try {
@@ -1105,7 +1064,7 @@ public class TeiidService implements ITeiidService {
 		}
 	}
 
-	/**
+	*//**
 	 * Delete the dataSources and VDB.
 	 * 
 	 * @param dsNames
@@ -1114,7 +1073,7 @@ public class TeiidService implements ITeiidService {
 	 *            the vdb name
 	 * @return the sources list after delete
 	 * @throws DataVirtUiException
-	 */
+	 *//*
 	@Override
 	public List<DataSourcePageRow> deleteDataSourcesAndVdb(Collection<String> dsNames, String vdbName)
 			throws DataVirtUiException {
@@ -1132,7 +1091,7 @@ public class TeiidService implements ITeiidService {
 		return getDataSources("filter", Constants.SERVICE_SOURCE_VDB_PREFIX);
 	}
 
-	/**
+	*//**
 	 * Delete the dataSources and VDBs. Then redeploy the supplied vdb with
 	 * renamed sources
 	 * 
@@ -1143,7 +1102,7 @@ public class TeiidService implements ITeiidService {
 	 * @param bean
 	 *            the details bean
 	 * @throws DataVirtUiException
-	 */
+	 *//*
 	@Override
 	public void deleteSourcesAndVdbRedeployRenamed(Collection<String> dsNames, String vdbName,
 			DataSourceWithVdbDetailsBean bean) throws DataVirtUiException {
@@ -1230,19 +1189,19 @@ public class TeiidService implements ITeiidService {
 		}
 	}
 
-	/*
-	 * Deploy a VDB with the requested View Model.
-	 * 
-	 * @param vdbName name of the VDB
-	 * 
-	 * @param vdbVersion the VDB version
-	 * 
-	 * @param vdbPropMap the VDB property map
-	 * 
-	 * @param viewModelRequestBean the view model details
-	 * 
-	 * @return the VdbDetails
-	 */
+	
+	  Deploy a VDB with the requested View Model.
+	  
+	  @param vdbName name of the VDB
+	  
+	  @param vdbVersion the VDB version
+	  
+	  @param vdbPropMap the VDB property map
+	  
+	  @param viewModelRequestBean the view model details
+	  
+	  @return the VdbDetails
+	 
 	public VdbDetailsBean deployNewVDB(final String vdbName, final int vdbVersion, final Map<String, String> vdbPropMap,
 			final ViewModelRequestBean viewModelRequest) throws DataVirtUiException {
 		// Create a new VDB
@@ -1333,16 +1292,16 @@ public class TeiidService implements ITeiidService {
 		createVdbDataSource(vdbName);
 	}
 
-	/*
-	 * Helper method - waits for the VDB to finish loading
-	 * 
-	 * @param deploymentName the deployment name for the VDB
-	 * 
-	 * @param timeoutInSecs time to wait before timeout
-	 * 
-	 * @return 'true' if vdb found and is out of 'Loading' status, 'false'
-	 * otherwise.
-	 */
+	
+	  Helper method - waits for the VDB to finish loading
+	  
+	  @param deploymentName the deployment name for the VDB
+	  
+	  @param timeoutInSecs time to wait before timeout
+	  
+	  @return 'true' if vdb found and is out of 'Loading' status, 'false'
+	  otherwise.
+	 
 	private boolean waitForVDBDeploymentToLoad(String deploymentName, int timeoutInSecs) {
 		long waitUntil = System.currentTimeMillis() + timeoutInSecs * 1000;
 		if (timeoutInSecs < 0) {
@@ -1405,18 +1364,18 @@ public class TeiidService implements ITeiidService {
 		return false;
 	}
 
-	/*
-	 * Helper method - waits for the VDB to finish loading
-	 * 
-	 * @param vdbName the name of the VDB
-	 * 
-	 * @param vdbVersion the VDB version
-	 * 
-	 * @param timeoutInSecs time to wait before timeout
-	 * 
-	 * @return 'true' if vdb found and is out of 'Loading' status, 'false'
-	 * otherwise.
-	 */
+	
+	  Helper method - waits for the VDB to finish loading
+	  
+	  @param vdbName the name of the VDB
+	  
+	  @param vdbVersion the VDB version
+	  
+	  @param timeoutInSecs time to wait before timeout
+	  
+	  @return 'true' if vdb found and is out of 'Loading' status, 'false'
+	  otherwise.
+	 
 	private boolean waitForVDBLoad(String vdbName, int vdbVersion, int timeoutInSecs) {
 		long waitUntil = System.currentTimeMillis() + timeoutInSecs * 1000;
 		if (timeoutInSecs < 0) {
@@ -1660,13 +1619,13 @@ public class TeiidService implements ITeiidService {
 		return suffix;
 	}
 
-	/**
+	*//**
 	 * Determine the server HostName. Used to determine whether the application
 	 * is running on OpenShift and the hostName is also used to build the urls
 	 * for REST, OData and JDBC
 	 * 
 	 * @return
-	 */
+	 *//*
 	private String getServerHost() {
 		String serverHost = LOCALHOST;
 
@@ -1822,4 +1781,4 @@ public class TeiidService implements ITeiidService {
 			return TranslatorHelper.TEIID;
 		}
 	}
-}
+*/}

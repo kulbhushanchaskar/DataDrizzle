@@ -2,9 +2,9 @@ package com.datadrizzle.entities;
 
 import java.util.Map;
 
-public class DataDrizzleConnection {
+public class DataDrizzleConnection extends AbstractConnnection {
 	
-	private Map<String,String> connectionParameters;
+//	private Map<String,String> connectionParameters;
 	
 	public DataDrizzleConnection() {
 		

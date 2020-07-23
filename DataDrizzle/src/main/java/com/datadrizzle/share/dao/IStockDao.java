@@ -1,11 +1,12 @@
-package com.datadrizzle.share.dao;
+/*package com.datadrizzle.share.dao;
 
 import java.util.List;
 
-import com.datadrizzle.vo.MutualFundCompanyVO;
+//import com.datadrizzle.vo.MutualFundCompanyVO;
 
 public interface IStockDao {
 	
-	public List<MutualFundCompanyVO> getAllMutualFundCompanies(); 
+//	public List<MutualFundCompanyVO> getAllMutualFundCompanies(); 
 
 }
+*/

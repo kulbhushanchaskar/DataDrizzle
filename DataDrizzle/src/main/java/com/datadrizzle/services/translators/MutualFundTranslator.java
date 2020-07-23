@@ -14,7 +14,8 @@ public class MutualFundTranslator {
 	public static List<MutualFundHistoryData> mutualFundHistoryData(JSONObject mutualFundHistoryJSON) throws JSONException {
 		Iterator<String> keys = mutualFundHistoryJSON.keys();
 		List<MutualFundHistoryData> historyList = new ArrayList<>();
-		while(keys.hasNext()) {
+		//below code in while loop is working
+		/*while(keys.hasNext()) {
 		    String key = keys.next();
 		    if (mutualFundHistoryJSON.get(key) instanceof JSONObject) {
 		    	String date = key;
@@ -29,7 +30,7 @@ public class MutualFundTranslator {
 		    	MutualFundHistoryData mutualFundHistoryDataOFDate = new MutualFundHistoryData(date, open, close, high, low, volume);
 		    	historyList.add(mutualFundHistoryDataOFDate);
 		    }
-		}
+		}*/
 		return historyList;
 	}
 

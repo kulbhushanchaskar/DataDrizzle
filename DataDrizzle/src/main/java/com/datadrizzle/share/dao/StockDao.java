@@ -1,4 +1,4 @@
-package com.datadrizzle.share.dao;
+/*package com.datadrizzle.share.dao;
 
 import java.util.List;
 
@@ -22,3 +22,4 @@ public class StockDao implements IStockDao {
 	}
 
 }
+*/

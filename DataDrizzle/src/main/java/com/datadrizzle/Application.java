@@ -3,7 +3,7 @@ package com.datadrizzle;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"com.datadrizzle", "org.teiid"})
+@SpringBootApplication(scanBasePackages = {"com.datadrizzle"})
 public class Application  {
     
     public static void main(String[] args) {

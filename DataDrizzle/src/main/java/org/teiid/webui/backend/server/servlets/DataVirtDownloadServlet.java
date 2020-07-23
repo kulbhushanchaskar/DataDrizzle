@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ 
 package org.teiid.webui.backend.server.servlets;
 
 import java.io.ByteArrayInputStream;
@@ -34,11 +34,11 @@ import org.teiid.webui.share.Constants;
 import org.teiid.webui.share.exceptions.DataVirtUiException;
 import org.teiid.webui.share.services.StringUtils;
 
-/**
+*//**
  * A standard servlet that makes it easy to download VDB content.
  *
  * @author mdrillin@redhat.com
- */
+ *//*
 public class DataVirtDownloadServlet extends HttpServlet {
 
 	private static final long serialVersionUID = DataVirtDownloadServlet.class.hashCode();
@@ -48,15 +48,15 @@ public class DataVirtDownloadServlet extends HttpServlet {
 //    @Inject
     protected TeiidService teiidService;
 
-    /**
+    *//**
 	 * Constructor.
-	 */
+	 *//*
 	public DataVirtDownloadServlet() {
 	}
 
-	/**
+	*//**
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
+	 *//*
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
 			IOException {
@@ -158,10 +158,10 @@ public class DataVirtDownloadServlet extends HttpServlet {
         }
     }
     
-    /**
+    *//**
      * Determine if running on an OpenShift instance.
      * @return 'true' if on OpenShift, 'false' if not.
-     */
+     *//*
     private boolean isOpenShift() {
     	boolean isOpenShift = false;
     	String openShiftIP = System.getenv("OPENSHIFT_DV_IP");
@@ -172,3 +172,4 @@ public class DataVirtDownloadServlet extends HttpServlet {
     }
 
 }
+*/

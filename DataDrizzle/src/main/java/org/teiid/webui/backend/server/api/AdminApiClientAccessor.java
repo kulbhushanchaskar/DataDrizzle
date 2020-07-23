@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ 
 package org.teiid.webui.backend.server.api;
 
 import java.util.Locale;
@@ -22,11 +22,11 @@ import java.util.Locale;
 import org.springframework.stereotype.Service;
 import org.teiid.webui.backend.server.services.AdminApiClient;
 
-/**
+*//**
  * The class used whenever an Atom API request for data needs to be made.
  *
  * @author mdrillin@redhat.com
- */
+ *//*
 //@Singleton
 @Service
 public class AdminApiClientAccessor {
@@ -43,16 +43,16 @@ public class AdminApiClientAccessor {
 //    @Inject
 //    private DataVirtUIConfig config;
 
-	/**
+	*//**
 	 * C'tor.
-	 */
+	 *//*
 	public AdminApiClientAccessor() {
 	}
 
-    /**
+    *//**
      * Creates a new s-ramp client from configuration.
      * @param config
-     */
+     *//*
     protected AdminApiClient createClient() {
 //        boolean validating = "true".equals(config.getConfig().getString(DataVirtUIConfig.DATAVIRT_API_VALIDATING)); //$NON-NLS-1$
 //        AuthenticationProvider authProvider = null;
@@ -70,9 +70,9 @@ public class AdminApiClientAccessor {
 //    	return new AdminApiClient();
     }
 
-	/**
+	*//**
 	 * @return the atom api client
-	 */
+	 *//*
 	public AdminApiClient getClient() {
 	    if (client.get() == null) {
 	        client.set(createClient());
@@ -82,3 +82,4 @@ public class AdminApiClientAccessor {
 	}
 
 }
+*/

@@ -45,8 +45,8 @@ public class POC {
 	
 	static String host = "localhost";
     static String port = "31000";
-    static String vdb = "TEST_myConnection150";
-    static String modelName = "TEST_myConnection150";
+    static String vdb = "combine";
+    static String modelName = "MysqlXADS3";
     static String pwd = "user@123";
     private static Admin admin;
     
@@ -450,7 +450,22 @@ public class POC {
     	
         select_par_sql = "SELECT name,TEST_myConnection150UDF.abcd('ds') FROM TEST_myConnection150.world.city";
         
-        execute(connection, select_par_sql);
+        select_par_sql = "SELECT * FROM TEST_hive_movies.actors_main";
+        
+//        select_par_sql = "SELECT * FROM MysqlXADS3.movies.actors";
+        
+        select_par_sql = "SELECT MysqlXADS3.movies.actors.id,MysqlXADS3.movies.actors.name FROM MysqlXADS3.movies.actors, TEST_hive_movies.actors_main WHERE TEST_hive_movies.actors_main.id = MysqlXADS3.movies.actors.id";
+//        AND TEST_hive_movies.actors_main.id NOT IN (MysqlXADS3.movies.actors.id)
+        
+        select_par_sql = "SELECT a.id FROM MysqlXADS3.movies.actors a FULL OUTER JOIN TEST_hive_movies.actors_main b "
+        		+ "ON a.id=b.id WHERE a.id IS NULL OR b.id IS NULL";
+        
+        select_par_sql = "SELECT s.* from MysqlXADS3.movies.actors s full outer join TEST_hive_movies.actors_main t on s.id = t.id where s.name != t.name";
+        select_par_sql = "SELECT s.* from MysqlXADS3.movies.actors s full outer join TEST_hive_movies.actors_main t on s.id = t.id where s.name != t.name and s.id <= 6 limit 100";
+        
+//        select_par_sql = "UPDATE TEST_hive_movies.actors_main SET rec_insert_time = '2020-02-21 11:05:40.0' WHERE id = 1";
+        
+        execute(connection, select_par_sql); 
         
     	connection.close(); 
 
@@ -888,7 +903,7 @@ public class POC {
             Statement statement = connection.createStatement();
 
             ResultSet results = null;
-            if (sql.contains("INSERT")) {
+            if (sql.contains("INSERT") || sql.contains("UPDATE")) {
                 int rwo_insert = statement.executeUpdate(sql);
                 System.out.println(rwo_insert);
 

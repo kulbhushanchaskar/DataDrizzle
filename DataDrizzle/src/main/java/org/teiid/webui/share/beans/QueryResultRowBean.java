@@ -15,12 +15,7 @@
  */
 package org.teiid.webui.share.beans;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jboss.errai.common.client.api.annotations.Portable;
-
-import groovy.beans.Bindable;
 
 /**
  * A data bean for returning Query Table and Procedure information. 
@@ -28,29 +23,29 @@ import groovy.beans.Bindable;
  * @author mdrillin@redhat.com
  */
 @Portable
-@Bindable
-public class QueryResultRowBean {
+//@Bindable
+public class QueryResultRowBean {/*
 
     private List<String> colResults = new ArrayList<String>();
 
-    /**
+    *//**
      * Constructor.
-     */
+     *//*
     public QueryResultRowBean() {
     }
 
-    /**
+    *//**
      * @return the Column results
-     */
+     *//*
     public List<String> getColumnResults() {
         return colResults;
     }
 
-    /**
+    *//**
      * @param name the name to set
-     */
+     *//*
     public void setColumnResults(List<String> colResults) {
         this.colResults = colResults;
     }
 
-}
+*/}

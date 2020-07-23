@@ -1,4 +1,4 @@
-package com.datadrizzle.vo;
+/*package com.datadrizzle.vo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,3 +51,4 @@ public class MutualFundCompanyVO {
 		return "MutualFundCompany [id=" + id + ", companyName=" + companyName + ", symbol=" + symbol + "]";
 	}
 }
+*/

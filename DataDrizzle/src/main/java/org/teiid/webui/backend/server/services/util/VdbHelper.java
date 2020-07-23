@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ 
 package org.teiid.webui.backend.server.services.util;
 
 import java.io.ByteArrayOutputStream;
@@ -38,9 +38,9 @@ import org.teiid.webui.share.beans.VdbModelBean;
 import org.teiid.webui.share.beans.ViewModelRequestBean;
 import org.teiid.webui.share.exceptions.DataVirtUiException;
 
-/**
+*//**
  * Contains methods for working with VDBs
- */
+ *//*
 public class VdbHelper {
 
 	// ============================================
@@ -54,27 +54,27 @@ public class VdbHelper {
 
 	// ============================================
 	// Static Methods
-	/**
+	*//**
 	 * Get the singleton instance
 	 *
 	 * @return instance
-	 */
+	 *//*
 	public static VdbHelper getInstance() {
 		return instance;
 	}
 
-	/*
+	
 	 * Create a VdbHelper
-	 */
+	 
 	private VdbHelper() {
 	}
 
-	/**
+	*//**
 	 * Create a VDB object
 	 * @param vdbName the name of the VDB
 	 * @param vdbVersion the vdb version
 	 * @return the VDBMetadata
-	 */
+	 *//*
 	public VDBMetaData createVdb(String vdbName, int vdbVersion, Properties vdbProperties) {
 		VDBMetaData vdb = new VDBMetaData();
 
@@ -86,11 +86,11 @@ public class VdbHelper {
 		return vdb;
 	}
 
-	/**
+	*//**
 	 * Get the bytearray version of the VDBMetaData object
 	 * @param vdb the VDB
 	 * @return the vdb in bytearray form
-	 */
+	 *//*
 	public byte[] getVdbByteArray(VDBMetaData vdb) throws Exception {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		VDBMetadataParser.marshell(vdb, out);
@@ -98,21 +98,21 @@ public class VdbHelper {
 		return out.toByteArray();
 	}
 
-	/**
+	*//**
 	 * Get the stringified version of the VDBMetaData object
 	 * @param vdb the VDB
 	 * @return the vdb in string form
-	 */
+	 *//*
 	public String getVdbString(VDBMetaData vdb) throws Exception {
 		return new String(getVdbByteArray(vdb));
 	}
 
-	/**
+	*//**
 	 * Create a VDB import object
 	 * @param vdbName the name of the VDB to import
 	 * @param vdbVersion the vdb version
 	 * @return the VDBImportMetadata
-	 */
+	 *//*
 	public VDBImportMetadata createVdbImport(String vdbName, int vdbVersion) {
 		VDBImportMetadata vdbImport = new VDBImportMetadata();
 		vdbImport.setName(vdbName);
@@ -120,7 +120,7 @@ public class VdbHelper {
 		return vdbImport;
 	}
 
-	/**
+	*//**
 	 * Create a Source Model
 	 * @param modelName the name of the Model
 	 * @param sourceMappingName the name of the source mapping
@@ -128,7 +128,7 @@ public class VdbHelper {
 	 * @param translator the translator name
 	 * @param importProps the import properties
 	 * @return the ModelMetaData
-	 */
+	 *//*
 	public ModelMetaData createSourceModel(String modelName, String sourceMappingName, String jndiName, 
 			String translator, Properties importProps, Optional<String> ddl) {
 		ModelMetaData modelMetaData = new ModelMetaData();
@@ -142,13 +142,13 @@ public class VdbHelper {
 		return modelMetaData;
 	}
 
-	/**
+	*//**
 	 * Create a View Model
 	 * @param modelName the name of the Model
 	 * @param ddl the DDL which defines the view
 	 * @param isVisible 'true' if the model is to be visible, 'false' if not.
 	 * @return the ModelMetaData
-	 */
+	 *//*
 	public ModelMetaData createViewModel(String modelName, String description, String ddl, boolean isVisible) {
 		ModelMetaData modelMetaData = new ModelMetaData();
 		modelMetaData.setName(modelName);
@@ -160,11 +160,11 @@ public class VdbHelper {
 		return modelMetaData;
 	}
 	
-    /**
+    *//**
      * Get ModelInfo for the models in the specified VDB
      * @param vdb the vdb
      * @return the VdbDetailsBean
-     */
+     *//*
 	public VdbDetailsBean getVdbDetails(VDBMetaData vdb) {
 		VdbDetailsBean vdbDetailsBean = new VdbDetailsBean();
 
@@ -313,11 +313,11 @@ public class VdbHelper {
 		return vdbDetailsBean;
 	}
 	
-	/**
+	*//**
 	 * Get the VDB Deployment name
 	 * @param vdb the VDBMetaData
 	 * @return the deployment name
-	 */
+	 *//*
 	public String getVdbDeploymentName(VDBMetaData vdb) {
 		String deploymentName = null;
 		if(vdb!=null) {
@@ -326,11 +326,11 @@ public class VdbHelper {
 		return deploymentName;
 	}
 	
-	/**
+	*//**
 	 * Get the VDB Status that will be displayed in the UI.  This may be different from the VDBMetaData object status to simplify
 	 * @param vdb the VDBMetaData
 	 * @return the vdb status
-	 */
+	 *//*
 	public String getVdbStatus(VDBMetaData vdb) {
 		VDB.Status status = vdb.getStatus();
 		String vdbStatus = Constants.STATUS_UNKNOWN;
@@ -350,11 +350,11 @@ public class VdbHelper {
 		return vdbStatus;
 	}
 	
-    /**
+    *//**
      * Get the imports for the specified VDB
      * @param vdb the vdb
      * @return the List of VDBImportMetadata
-     */
+     *//*
 	public List<VDBImportMetadata> getVdbImports(VDBMetaData vdb) {
 		if(vdb!=null) {
 			List<VDBImportMetadata> vdbImports = new ArrayList<VDBImportMetadata>(vdb.getVDBImports());
@@ -364,11 +364,11 @@ public class VdbHelper {
 		return Collections.emptyList();
 	}
 
-    /**
+    *//**
      * Get the ViewModels for the specified VDB
      * @param vdb the vdb
      * @return the List of View Models
-     */
+     *//*
 	public List<ModelMetaData> getVdbViewModels(VDBMetaData vdb) {
 		if(vdb!=null) {
 			// Get current vdb ViewModels
@@ -386,11 +386,11 @@ public class VdbHelper {
 		return Collections.emptyList();
 	}
 	
-    /**
+    *//**
      * Get the Properties for the specified VDB
      * @param vdb the vdb
      * @return the Vdb Properties
-     */
+     *//*
 	public Properties getVdbProperties(VDBMetaData vdb) {
 		if(vdb!=null) {
 			return vdb.getProperties();
@@ -399,13 +399,13 @@ public class VdbHelper {
 		return new Properties();
 	}
 	
-	/**
+	*//**
 	 * Adds the Import to supplied VDB deployment. The new VDB is returned.
 	 * @param vdb the VDB
 	 * @param importVdbName the name of the VDB to import
 	 * @param importVdbVersion the version of the VDB to import
 	 * @return the new VDB
-	 */
+	 *//*
 	public VDBMetaData addImports(VDBMetaData vdb, List<String> importVdbNames, List<Integer> importVdbVersions) {
 		String vdbName = vdb.getName();
 		int vdbVersion = Integer.parseInt(vdb.getVersion());
@@ -474,7 +474,7 @@ public class VdbHelper {
 		return newVdb;
 	}
 	
-	/**
+	*//**
 	 * Replaces and import in the supplied vdb with a different import.  (Used for source renames)
 	 * @param vdb the VDB
 	 * @param originalImportName the name of the existing import
@@ -482,7 +482,7 @@ public class VdbHelper {
 	 * @param newImportName the name of the new import which replaces existing
 	 * @param newImportName the version of the new import which replaces existing
 	 * @return the new VDB
-	 */
+	 *//*
 	public VDBMetaData replaceImport(VDBMetaData vdb, String originalImportName, Integer originalImportVersion, String newImportName, Integer newImportVersion) {
 		String vdbName = vdb.getName();
 		int vdbVersion = Integer.parseInt(vdb.getVersion());
@@ -519,12 +519,12 @@ public class VdbHelper {
 		return newVdb;
 	}
 
-	/**
+	*//**
 	 * Determine if the supplied VDB has the specified import VDB
 	 * @param vdb the VDB
 	 * @param importVdbName the name of the VDB import
 	 * @return 'true' if the VDB has the import, 'false' if not.
-	 */
+	 *//*
 	public boolean hasImport(VDBMetaData vdb, String importVdbName) {
 		boolean hasImport = false;
 		
@@ -541,12 +541,12 @@ public class VdbHelper {
 		return hasImport;
 	}
 	
-	/**
+	*//**
 	 * Adds the ViewModel to supplied VDB deployment. The new VDB is returned.
 	 * @param vdb the VDB
 	 * @param viewModelRequest details of the requested viewModel to create
 	 * @return the new VDB
-	 */
+	 *//*
 	public VDBMetaData addViewModel(VDBMetaData vdb, ViewModelRequestBean viewModelRequest) {
 		//public VDBMetaData addViewModel(VDBMetaData vdb, String viewModelName, String description, String ddlString, boolean isVisible) {
 		String vdbName = vdb.getName();
@@ -584,12 +584,12 @@ public class VdbHelper {
 		return newVdb;
 	}
 
-	/**
+	*//**
 	 * Removes the imports from the supplied VDB - if they exist. The new VDB is returned.
 	 * @param vdb the VDB
 	 * @param removeImportNameList the list of import names to remove
 	 * @return the List of ImportInfo data
-	 */
+	 *//*
 	public VDBMetaData removeImports(VDBMetaData vdb, List<String> removeImportNameList) {                
 		String vdbName = vdb.getName();
 		int vdbVersion = Integer.parseInt(vdb.getVersion());;
@@ -632,12 +632,12 @@ public class VdbHelper {
 		}
 	}
 	
-	/**
+	*//**
 	 * Removes the models from the supplied VDB - if they exist. The new VDB is returned.
 	 * @param vdb the VDB
 	 * @param removeModelNameAndTypeMap the Map of modelName to type
 	 * @return the new VDB
-	 */
+	 *//*
 	public VDBMetaData removeModels(VDBMetaData vdb, Map<String,String> removeModelNameAndTypeMap) {                
 		String vdbName = vdb.getName();
 		int vdbVersion = Integer.parseInt(vdb.getVersion());
@@ -690,12 +690,12 @@ public class VdbHelper {
 		return newVdb;
 	}
 		
-	/**
+	*//**
 	 * Clone the supplied VDB, renaming all its views by appending the supplied suffix to the name
 	 * @param vdb the VDB
 	 * @param viewModelSuffix suffix to be applied when changing the view names
 	 * @return the new VDB
-	 */
+	 *//*
 	public VDBMetaData cloneVdbRenamingViewModels(VDBMetaData vdb, String viewModelSuffix) {                
 		String vdbName = vdb.getName();
 		int vdbVersion = Integer.parseInt(vdb.getVersion());
@@ -741,11 +741,11 @@ public class VdbHelper {
 		return newVdb;
 	}
 	
-	/**
+	*//**
 	 * Clone the supplied VDB, basically to force reload of the source models
 	 * @param vdb the VDB
 	 * @return the new VDB
-	 */
+	 *//*
 	public VDBMetaData cloneVdb(VDBMetaData vdb) {                
 		String vdbName = vdb.getName();
 		int vdbVersion = Integer.parseInt(vdb.getVersion());
@@ -791,12 +791,12 @@ public class VdbHelper {
 		return newVdb;
 	}
 
-	/**
+	*//**
 	 * Clone the supplied view models from the supplied VDB - if they exist. The new VDB is returned.
 	 * @param vdb the VDB
 	 * @param viewModelNames the List of View Model names to clone in the supplied vdb
 	 * @return the new VDB
-	 */
+	 *//*
 	public VDBMetaData cloneViewModel(VDBMetaData vdb, String viewModelName) {                
 		String vdbName = vdb.getName();
 		int vdbVersion = Integer.parseInt(vdb.getVersion());
@@ -898,3 +898,4 @@ public class VdbHelper {
 
 }
 
+*/

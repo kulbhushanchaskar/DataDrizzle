@@ -15,40 +15,12 @@
  */
 package org.teiid.webui.backend.server.services;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-
-import org.jboss.as.controller.client.ModelControllerClient;
-import org.teiid.adminapi.Admin;
-import org.teiid.adminapi.AdminException;
-import org.teiid.adminapi.PropertyDefinition;
-import org.teiid.adminapi.Translator;
-import org.teiid.adminapi.VDB;
-import org.teiid.adminapi.impl.VDBMetaData;
-import org.teiid.adminapi.jboss.AdminFactory;
-import org.teiid.webui.backend.server.services.util.VdbHelper;
-import org.teiid.webui.share.Constants;
-import org.teiid.webui.share.TranslatorHelper;
-import org.teiid.webui.share.services.StringUtils;
-
-import com.datadrizzle.share.ApplicationConstants;
-
 /**
  * Class used to communicate with the Teiid Server Admin API
  *
  * @author mdrillin@redhat.com
  */
-public class AdminApiClient {
+public class AdminApiClient {/*
 
     private static final String LOCALHOST = "127.0.0.1";
     private static final String DRIVER_KEY = "driver-name";
@@ -76,26 +48,26 @@ public class AdminApiClient {
 		}
     }
 
-    /**
+    *//**
      * Constructor.
      * @param endpoint
      * @param username
      * @param password
      * @param validating
      * @throws AdminApiClientException
-     */
+     *//*
     public AdminApiClient(final String username, final String password, final boolean validating) throws AdminApiClientException {
         //this(new BasicAuthenticationProvider(), validating);
         this(validating);
     }
 
-    /**
+    *//**
      * Constructor.
      * @param endpoint
      * @param authenticationProvider
      * @param validating
      * @throws AdminApiClientException
-     */
+     *//*
     public AdminApiClient(final boolean validating) throws AdminApiClientException {
         // Establish serverHost this is running on
         if(this.serverHost==null) establishServerHost();
@@ -116,14 +88,14 @@ public class AdminApiClient {
         }
     }
 	
-    /**
+    *//**
      * Get an admin api connection with the supplied credentials
      * @param serverHost the server hostname
      * @param serverPort the server port number
      * @param userName the username
      * @param password the password
      * @return the admin api
-     */
+     *//*
     private Admin getAdminApi (String serverHost, int serverPort, String userName, String password) throws Exception {
             Admin admin = null;
             try {
@@ -143,9 +115,9 @@ public class AdminApiClient {
             return admin;
     }
     
-    /**
+    *//**
      * Establish the serverHost this is running on. Only need to do this once.
-     */
+     *//*
     private void establishServerHost() {
     	serverHost = LOCALHOST;
     	
@@ -176,10 +148,10 @@ public class AdminApiClient {
     	}
     }
 
-    /*
+    
      * Get the Collection of DataSource Summary properties
      * @return the Map of DataSource name - type
-     */
+     
 	public Collection<Properties> getDataSourceSummaryPropsCollection() throws AdminApiClientException {
 		if(this.admin==null) return Collections.emptyList();
 
@@ -213,12 +185,12 @@ public class AdminApiClient {
 		return dsSummaryPropCollection;
 	}
 	
-    /**
+    *//**
      * Create a Data Source
      * @param deploymentName the name of the deployment
      * @param templateName the source template name
      * @param props the datasource properties
-     */
+     *//*
 	public void createDataSource(String deploymentName, String templateName, Properties props) throws AdminApiClientException {
 		if(this.admin!=null) {
 			try {
@@ -229,10 +201,10 @@ public class AdminApiClient {
 		}
 	}
 	
-    /**
+    *//**
      * Get the current Collection of DataSource names
      * @return the collection of DataSource names
-     */
+     *//*
 	public Collection<String> getDataSourceNames() throws AdminApiClientException {
 		if(this.admin==null) return Collections.emptyList();
 
@@ -247,10 +219,10 @@ public class AdminApiClient {
 		return (sourceNames!=null) ? sourceNames : Collections.<String>emptyList();
 	}
 
-	/*
+	
      * Get the current Collection of Translators
      * @return the collection of translators
-     */
+     
 	public Collection<String> getTranslatorNames() throws AdminApiClientException {
 		if(this.admin==null) return Collections.emptyList();
 
@@ -273,10 +245,10 @@ public class AdminApiClient {
 		return transNames;
 	}
 	
-	/*
+	
      * Get the current Collection of Translator Import property definitions
      * @return the collection of translator import properties
-     */
+     
 	public Collection<? extends PropertyDefinition> getTranslatorImportProperties(String translatorName) throws AdminApiClientException {
 		if(this.admin==null) return Collections.emptyList();
 
@@ -295,11 +267,11 @@ public class AdminApiClient {
 		}
 	}
 	
-    /*
+    
      * Get the Properties for the supplied DataSource name
      * @param dataSourceName the name of the datasource
      * @return the properties for the DataSource names
-     */
+     
 	public Properties getDataSourceProperties(String dataSourceName) throws AdminApiClientException {
 		if(this.admin==null) return null;
 
@@ -314,10 +286,10 @@ public class AdminApiClient {
 		return dsProps;
 	}
 	
-	/**
+	*//**
 	 * Get a Map of default translators for the dataSources
 	 * @return the dsName to default translator mappings
-	 */
+	 *//*
 	public Map<String,String> getDefaultTranslatorMap( ) throws AdminApiClientException {
 		Map<String,String> defaultTranslatorsMap = new HashMap<String,String>();
 
@@ -332,11 +304,11 @@ public class AdminApiClient {
 		return defaultTranslatorsMap;
 	}
     
-    /**
+    *//**
      * Get the Type(driver) for the supplied DataSource name
      * @param dataSourceName the name of the data source
      * @return the DataSource type
-     */
+     *//*
 	public String getDataSourceType(String dataSourceName) throws AdminApiClientException {
 		if(this.admin==null) return null;
 
@@ -346,11 +318,11 @@ public class AdminApiClient {
 		return getDataSourceType(dsProps);
 	}
 	
-	/*
+	
 	 * Get the source type from the provided properties
 	 * @param dsProps the data source properties
 	 * @return the dataSource type name
-	 */
+	 
 	private String getDataSourceType(Properties dsProps) {
 		if(dsProps==null) return Constants.STATUS_UNKNOWN;
 
@@ -365,21 +337,21 @@ public class AdminApiClient {
 		return driverName;
 	}
 
-	/*
+	
 	 * Get the source jndiName from the provided properties
 	 * @param dsProps the data source properties
 	 * @return the dataSource jndi name
-	 */
+	 
 	private String getDataSourceJndiName(Properties dsProps) {
 		if(dsProps==null) return Constants.STATUS_UNKNOWN;
 
 		return dsProps.getProperty(JNDINAME_KEY);
 	}
 	    
-    /*
+    
      * Get the current Collection of DataSource names
      * @return the collection of DataSource names
-     */
+     
 	public Collection<String> getDataSourceTypes() throws AdminApiClientException {
 		if(this.admin==null) return Collections.emptyList();
 
@@ -416,10 +388,10 @@ public class AdminApiClient {
 		}
 	}
 
-	/*
+	
      * Delete the supplied DataSource. 
      * @param dataSourceName the DataSource name
-     */
+     
 	public void deleteDataSource(String dataSourceName) throws AdminApiClientException {
 		if(this.admin==null) return;
 
@@ -440,20 +412,20 @@ public class AdminApiClient {
 		}
 	}
 
-	/*
+	
      * Delete the supplied list of DataSources
      * @param dataSourceNames the collection of datasources
-     */
+     
 	public void deleteDataSources(Collection<String> dataSourceNames) throws AdminApiClientException {
 		for(String dsName : dataSourceNames) {
 			deleteDataSource(dsName);
 		}
 	}
 	
-	/*
+	
 	 * Delete the supplied list of DataSource types
 	 * @param dataSourceTypeNames the collection of datasource types
-	 */
+	 
 	public void deleteDataSourceTypes(Collection<String> dataSourceTypeNames) throws AdminApiClientException {
 		if(this.admin==null) return;
 
@@ -472,11 +444,11 @@ public class AdminApiClient {
 		}
 	}
 	
-	/*
+	
      * Deploy the supplied content
      * @param deploymentName the deployment name
      * @param content the deployment content
-     */
+     
 	public void deploy(String deploymentName, InputStream content) throws AdminApiClientException {
 		if(this.admin==null) return;
 
@@ -489,10 +461,10 @@ public class AdminApiClient {
 		}
 	}
 	
-	/*
+	
      * Undeploy the supplied content
      * @param deploymentName the deployment name
-     */
+     
 	public void undeploy(String deploymentName) throws AdminApiClientException {
 		if(this.admin==null) return;
 
@@ -505,10 +477,10 @@ public class AdminApiClient {
 		}
 	}
 	
-    /*
+    
      * Get the current List of DataService Vdb names
      * @return the list of DataService Vdb names
-     */
+     
 	public List<String> getDataServiceVdbNames( ) throws AdminApiClientException {
 		if(this.admin==null) return Collections.emptyList();
 
@@ -536,10 +508,10 @@ public class AdminApiClient {
 		}
 	}
 	
-    /*
+    
      * Get the current Collection of Vdb names
      * @return the collection of Vdb names
-     */
+     
 	public Collection<String> getVdbNames(boolean includeDynamic, boolean includeArchive, boolean includePreview) throws AdminApiClientException {
 		if(this.admin==null) return Collections.emptyList();
 
@@ -578,10 +550,10 @@ public class AdminApiClient {
 		}
 	}
 	
-    /*
+    
      * Get the current Collection of Vdb properties
      * @return the collection of Vdb properties
-     */
+     
 	public Collection<Properties> getVdbSummaryPropCollection(boolean includeDynamic, boolean includeArchive, boolean includePreview) throws AdminApiClientException {
 		if(this.admin==null) return Collections.emptyList();
 
@@ -658,10 +630,10 @@ public class AdminApiClient {
 		return vdb;
 	}
 
-    /*
+    
      * Delete the Dynamic VDBs.  This just undeploys the VDB - does *not* undeploy corresponding datasources, etc.
      * @param vdbName name of the VDB to delete
-     */
+     
 	public void deleteVDB(String vdbName) throws AdminApiClientException {
 		VDBMetaData vdb = getVDB(vdbName,1);
 		if(vdb==null) return;
@@ -680,28 +652,28 @@ public class AdminApiClient {
 		}
 	}
 	
-    /*
+    
      * Delete the Collection of Dynamic VDBs.  This just undeploys the VDB - does *not* undeploy corresponding datasources, etc.
      * @param vdbName name of the VDB to delete
-     */
+     
 	public void deleteVDBs(Collection<String> vdbNames) throws AdminApiClientException {
 		for(String vdbName : vdbNames) {
 			deleteVDB(vdbName);
 		}
 	}
         
-    /**
+    *//**
      * @return the locale
-     */
+     *//*
     public Locale getLocale() {
         return locale;
     }
 
-    /**
+    *//**
      * @param locale the locale to set
-     */
+     *//*
     public void setLocale(Locale locale) {
         this.locale = locale;
     }
 
-}
+*/}
